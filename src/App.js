@@ -4,6 +4,7 @@ function App() {
   return (
     <div>
       <Button variant="contained">HELLO WORLD</Button>
+      <Button variant="outlined">HELLO WORLD</Button>
 
       <h2>Testing Testing</h2>
     </div>
