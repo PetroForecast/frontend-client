@@ -3,7 +3,7 @@ export const dummyUsers = [
     {
       id: 1,
       username: 'user1',
-      password: 'password1',
+      password: 'pw1',
       email: 'user1@example.com',
       profile: {
         name: 'User One',
@@ -13,7 +13,7 @@ export const dummyUsers = [
     {
       id: 2,
       username: 'user2',
-      password: 'password2',
+      password: 'pw2',
       email: 'user2@example.com',
       profile: {
         name: 'User Two',
