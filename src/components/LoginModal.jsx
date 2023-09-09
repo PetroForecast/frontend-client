@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogTitle, TextField, Button } from '@mui/material';
 
+// This function takes in props and updates them based on user input
 const LoginModal = ({ open, onClose, onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

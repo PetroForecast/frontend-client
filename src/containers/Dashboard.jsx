@@ -1,5 +1,6 @@
 import React from 'react';
 
+//Todo add components
 function Dashboard({ user }) {
   return (
     <div>

@@ -16,6 +16,7 @@ export default function App() {
   // TODO:
   // Some logic to determine if the user is logged in, e.g., checking a token, etc.
 
+  //TESTING
     // Load user data from localStorage on initial load
     useEffect(() => {
       const storedUser = localStorage.getItem('currentUser');
@@ -36,7 +37,7 @@ export default function App() {
       setLoginModalOpen(false);
     };
 
-   // Login handler
+   // Login handler (FIXME with real auth logic)
     const handleLogin = (username, password) => {
       // Simulate authentication by checking against dummy user data
       const user = dummyUsers.find(
@@ -70,7 +71,7 @@ export default function App() {
   };
 
 
-  // Profile click handler (FIXME with real logic)
+  // Profile click handler
   const handleProfileClick = () => {
     // Handle the Profile click event here
     // Navigate to the Profile page
@@ -79,7 +80,7 @@ export default function App() {
   };
 
 
-  // Dashboard click handler (FIXME with real logic)
+  // Dashboard click handler
   const handleDashboardClick = () => {
     // Handle the Dashboard click event here
     // Navigate to the Dashboard page
