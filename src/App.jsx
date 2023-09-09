@@ -6,9 +6,11 @@ import UserAppBar from './components/UserAppBar';
 import UserProfile from './components/UserProfile';
 import HomePage from './pages/HomePage';
 import Dashboard from './containers/Dashboard';
+import LoginModal from './components/LoginModal';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const navigate = useNavigate();
   // TODO:
   // Some logic to determine if the user is logged in, e.g., checking a token, etc.
@@ -31,6 +33,9 @@ export default function App() {
       // Replace this condition with your actual authentication logic.
       if (fakeAuthToken) {
         setIsLoggedIn(true);
+
+
+
       } else {
         setIsLoggedIn(false);
       }
@@ -40,6 +45,16 @@ export default function App() {
     return () => clearTimeout(delay);
   }, []);
   // ==========TESTING PURPOSE ONLY END============= //
+
+    // Open the login modal
+    const openLoginModal = () => {
+      setLoginModalOpen(true);
+    };
+
+    // Close the login modal
+    const closeLoginModal = () => {
+      setLoginModalOpen(false);
+    };
 
    // Login handler (FIXME with real logic)
    const handleLogin = () => {
@@ -84,8 +99,14 @@ export default function App() {
                       onDashboardClick={handleDashboardClick}
                       onLogout={handleLogout}
       /> ) : ( <DefaultAppBar 
-                onLogin={handleLogin}
+                onLogin={openLoginModal}
       /> )}
+
+      <LoginModal
+        open={isLoginModalOpen}
+        onClose={closeLoginModal}
+        onLogin={handleLogin}
+      />
 
       <Routes>
         <Route path="/" element={<HomePage/>} />
