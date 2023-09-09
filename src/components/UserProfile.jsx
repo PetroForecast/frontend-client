@@ -1,39 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-export default function UserProfile(props) {
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    // Fetch user profile data based on the logged-in user
-    // Replace this with your actual logic to fetch user data.
-    const fetchUserProfileData = async () => {
-      try {
-        const response = await fetch('/api/user/profile'); // Replace with your API endpoint
-        if (response.ok) {
-          const data = await response.json();
-          setUserData(data);
-        } else {
-          // Handle error
-        }
-      } catch (error) {
-        // Handle error
-      }
-    };
-
-    fetchUserProfileData();
-  }, []);
-
-  if (!userData) {
-    return <div>Loading...</div>;
-  }
+function UserProfile() {
+  // Retrieve user data from local storage
+  const storedUser = localStorage.getItem('currentUser');
+  const user = storedUser ? JSON.parse(storedUser) : null;
 
   return (
     <div>
-      <h1>User Profile</h1>
-      <p>Name: {userData.name}</p>
-      <p>Email: {userData.email}</p>
-      {/* Display other user profile information */}
+      <h2>User Profile</h2>
+      {user ? (
+        <div>
+          <p>Username: {user.username}</p>
+          <p>Email: {user.email}</p>
+          {user.profile && (
+            <div>
+              <p>Name: {user.profile.name}</p>
+              <p>Bio: {user.profile.bio}</p>
+            </div>
+          )}
+          {/* Add more user data fields here */}
+        </div>
+      ) : (
+        <p>No user data available.</p>
+      )}
     </div>
   );
-};
+}
 
+export default UserProfile;

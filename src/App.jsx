@@ -1,5 +1,4 @@
-import Button from '@mui/material/Button';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Outlet, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import DefaultAppBar from './components/DefaultAppBar';
 import UserAppBar from './components/UserAppBar';
@@ -17,26 +16,15 @@ export default function App() {
   // TODO:
   // Some logic to determine if the user is logged in, e.g., checking a token, etc.
 
-  // ==========TESTING PURPOSE ONLY START============= //
-  // useEffect(() => {
-  //   // Simulate a delay
-  //   const delay = setTimeout(() => {
-  //     const fakeAuthToken = localStorage.getItem('authToken');
-  //     // Replace this condition with your actual authentication logic.
-  //     if (fakeAuthToken) {
-  //       setIsLoggedIn(true);
+    // Load user data from localStorage on initial load
+    useEffect(() => {
+      const storedUser = localStorage.getItem('currentUser');
+      if (storedUser) {
+        setCurrentUser(JSON.parse(storedUser));
+        setIsLoggedIn(true);
+      }
+    }, []);
 
-
-
-  //     } else {
-  //       setIsLoggedIn(false);
-  //     }
-  //   }, 1000); // Simulated 1-second delay
-
-  //   // Clean up the timeout to avoid memory leaks.
-  //   return () => clearTimeout(delay);
-  // }, []);
-  // ==========TESTING PURPOSE ONLY END============= //
 
     // Open the login modal
     const openLoginModal = () => {
@@ -59,6 +47,10 @@ export default function App() {
         // If authentication succeeds, set the user as the current user
         setIsLoggedIn(true);
         setCurrentUser(user);
+
+        // Save user data in localStorage
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        //console.log(localStorage.getItem('currentUser'))
         navigate('/dashboard'); // Navigate to the dashboard after successful login
       } else {
         // Handle login failure (e.g., show an error message)
@@ -70,10 +62,13 @@ export default function App() {
   const handleLogout = () => {
     // Clear the authentication token and set isLoggedIn to false.
     console.log('Logout clicked');
+    // Clear user data from localStorage
+    localStorage.removeItem('currentUser');
     setIsLoggedIn(false);
     setCurrentUser(null);
     navigate('/')
   };
+
 
   // Profile click handler (FIXME with real logic)
   const handleProfileClick = () => {
@@ -111,8 +106,27 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<HomePage/>} />
-        <Route path="/profile" element={<UserProfile/>} />
-        <Route path="/dashboard" element={<Dashboard/>} />
+        <Route 
+          path="/profile" 
+          element={
+            isLoggedIn ? (
+              <UserProfile user={currentUser} />
+            ) : (
+              <Navigate to="/" />
+            )
+          } 
+        />
+        <Route 
+          path="/dashboard" 
+          element={
+            isLoggedIn ? (
+              <Dashboard user={currentUser} />
+            ) : (
+              <Navigate to="/" />
+            )
+          } 
+        />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
 
     </>

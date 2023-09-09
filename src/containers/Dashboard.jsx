@@ -1,7 +1,19 @@
-import React from 'react'
+import React from 'react';
 
-export default function Dashboard() {
+function Dashboard({ user }) {
   return (
-    <div>Dashboard</div>
-  )
+    <div>
+      <h1>Welcome to the Dashboard</h1>
+      {user && (
+        <div>
+          <h2>User Information</h2>
+          <p>Username: {user.username}</p>
+          <p>Email: {user.email}</p>
+          {/* Display other user-specific information as needed */}
+        </div>
+      )}
+    </div>
+  );
 }
+
+export default Dashboard;
