@@ -1,12 +1,15 @@
 import Button from '@mui/material/Button';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import MainRoutes from './components/MainRoutes';
 import DefaultAppBar from './components/DefaultAppBar';
 import UserAppBar from './components/UserAppBar';
+import UserProfile from './components/UserProfile';
+import HomePage from './pages/HomePage';
+import Dashboard from './containers/Dashboard';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
   // TODO:
   // Some logic to determine if the user is logged in, e.g., checking a token, etc.
   // Replace this with actual authentication logic.
@@ -44,6 +47,7 @@ export default function App() {
     console.log('Login clicked');
     localStorage.setItem('authToken', 'token');
     setIsLoggedIn(true);
+    navigate('/dashboard')
   };
 
   // Logout handler (FIXME with real logic)
@@ -52,6 +56,7 @@ export default function App() {
     console.log('Logout clicked');
     localStorage.removeItem('authToken');
     setIsLoggedIn(false);
+    navigate('/')
   };
 
   // Profile click handler (FIXME with real logic)
@@ -59,20 +64,16 @@ export default function App() {
     // Handle the Profile click event here
     // Navigate to the Profile page
     console.log('Profile clicked');
+    navigate('/profile')
   };
 
-  // Account click handler (FIXME with real logic)
-  const handleAccountClick = () => {
-    // Handle the Account click event here
-    // Navigate to the Account page
-    console.log('Account clicked');
-  };
 
   // Dashboard click handler (FIXME with real logic)
   const handleDashboardClick = () => {
     // Handle the Dashboard click event here
     // Navigate to the Dashboard page
     console.log('Dashboard clicked');
+    navigate('/dashboard')
   };
   
 
@@ -80,12 +81,18 @@ export default function App() {
     <>
       {isLoggedIn ? ( <UserAppBar
                       onProfileClick={handleProfileClick}
-                      onAccountClick={handleAccountClick}
                       onDashboardClick={handleDashboardClick}
                       onLogout={handleLogout}
       /> ) : ( <DefaultAppBar 
                 onLogin={handleLogin}
       /> )}
+
+      <Routes>
+        <Route path="/" element={<HomePage/>} />
+        <Route path="/profile" element={<UserProfile/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+      </Routes>
+
     </>
   );
 }

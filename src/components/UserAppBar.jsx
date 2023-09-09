@@ -21,7 +21,6 @@ export default function UserAppBar(props) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const settings = [
     { label: 'Profile', onClick: props.onProfileClick },
-    { label: 'Account', onClick: props.onAccountClick },
     { label: 'Dashboard', onClick: props.onDashboardClick },
     { label: 'Logout', onClick: props.onLogout },
   ];
