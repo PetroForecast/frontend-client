@@ -5,6 +5,7 @@ function App() {
   return (
     <>
       <Button onClick={() => alert('You clicked me!')} variant="contained">CLICK ME</Button>
+      <Button onClick={() => alert('You clicked me!')} variant="contained">CLICK ME</Button>
     </>
   );
 }
