@@ -1,3 +1,8 @@
+/*TODO: 
+- role based user authentication
+- some logic to determine if the user is logged in, e.g., checking a token, etc.
+*/
+
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import DefaultAppBar from './components/DefaultAppBar';
@@ -13,51 +18,49 @@ export default function App() {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
-  // TODO:
-  // Some logic to determine if the user is logged in, e.g., checking a token, etc.
 
   //TESTING
-    // Load user data from localStorage on initial load
-    useEffect(() => {
-      const storedUser = localStorage.getItem('currentUser');
-      if (storedUser) {
-        setCurrentUser(JSON.parse(storedUser));
-        setIsLoggedIn(true);
-      }
-    }, []);
+  // Load user data from localStorage on initial load
+  useEffect(() => {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      setCurrentUser(JSON.parse(storedUser));
+      setIsLoggedIn(true);
+    }
+  }, []);
 
 
-    // Open the login modal
-    const openLoginModal = () => {
-      setLoginModalOpen(true);
-    };
+  // Open the login modal
+  const openLoginModal = () => {
+    setLoginModalOpen(true);
+  };
 
-    // Close the login modal
-    const closeLoginModal = () => {
-      setLoginModalOpen(false);
-    };
+  // Close the login modal
+  const closeLoginModal = () => {
+    setLoginModalOpen(false);
+  };
 
-   // Login handler (FIXME with real auth logic)
-    const handleLogin = (username, password) => {
-      // Simulate authentication by checking against dummy user data
-      const user = dummyUsers.find(
-        (u) => u.username === username && u.password === password
-      );
+  // Login handler (FIXME with real auth logic)
+  const handleLogin = (username, password) => {
+    // Simulate authentication by checking against dummy user data
+    const user = dummyUsers.find(
+      (u) => u.username === username && u.password === password
+    );
 
-      if (user) {
-        // If authentication succeeds, set the user as the current user
-        setIsLoggedIn(true);
-        setCurrentUser(user);
+    if (user) {
+      // If authentication succeeds, set the user as the current user
+      setIsLoggedIn(true);
+      setCurrentUser(user);
 
-        // Save user data in localStorage
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        //console.log(localStorage.getItem('currentUser'))
-        navigate('/dashboard'); // Navigate to the dashboard after successful login
-      } else {
-        // Handle login failure (e.g., show an error message)
-        console.log('Failed to login')
-      }
-    };
+      // Save user data in localStorage
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      //console.log(localStorage.getItem('currentUser'))
+      navigate('/dashboard'); // Navigate to the dashboard after successful login
+    } else {
+      // Handle login failure (e.g., show an error message)
+      console.log('Failed to login')
+    }
+  };
 
   // Logout handler (FIXME with real logic)
   const handleLogout = () => {
@@ -87,17 +90,17 @@ export default function App() {
     console.log('Dashboard clicked');
     navigate('/dashboard')
   };
-  
+
 
   return (
     <>
-      {isLoggedIn ? ( <UserAppBar
-                      onProfileClick={handleProfileClick}
-                      onDashboardClick={handleDashboardClick}
-                      onLogout={handleLogout}
-      /> ) : ( <DefaultAppBar 
-                onLogin={openLoginModal}
-      /> )}
+      {isLoggedIn ? (<UserAppBar
+        onProfileClick={handleProfileClick}
+        onDashboardClick={handleDashboardClick}
+        onLogout={handleLogout}
+      />) : (<DefaultAppBar
+        onLogin={openLoginModal}
+      />)}
 
       <LoginModal
         open={isLoginModalOpen}
@@ -105,27 +108,28 @@ export default function App() {
         onLogin={handleLogin}
       />
 
+
       <Routes>
-        <Route path="/" element={<HomePage/>} />
-        <Route 
-          path="/profile" 
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/profile"
           element={
             isLoggedIn ? (
               <UserProfile user={currentUser} />
             ) : (
               <Navigate to="/" />
             )
-          } 
+          }
         />
-        <Route 
-          path="/dashboard" 
+        <Route
+          path="/dashboard"
           element={
             isLoggedIn ? (
               <Dashboard user={currentUser} />
             ) : (
               <Navigate to="/" />
             )
-          } 
+          }
         />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
