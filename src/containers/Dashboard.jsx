@@ -1,6 +1,8 @@
 import React from 'react';
 
 //Todo add components
+//Todo prompt user to complete profile if not completed 
+//(After client registers they should login first to complete the profile)
 function Dashboard({ user }) {
   return (
     <div>

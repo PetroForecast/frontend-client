@@ -16,6 +16,7 @@ import { dummyUsers } from './data/users';
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
@@ -29,6 +30,38 @@ export default function App() {
     }
   }, []);
 
+  // Open the registration modal
+  const openRegistrationModal = () => {
+    setLoginModalOpen(true);
+  };
+
+  // Close the registration modal
+  const closeRegistrationModal = () => {
+    setLoginModalOpen(false);
+  };
+
+  //FIXME (with real registration logic)
+  const handleRegistration = (username, password) => {
+    const userExists = dummyUsers.find(
+      (u) => u.username === username && u.password === password
+    );
+
+    if (userExists) {
+      // FIXME
+      // Handle registration failure
+      alert('Failed to register');
+      console.log('Failed to register');
+    }
+    else {
+      // FIXME
+      // Insert data into database
+      // After client registers they should login first to complete the profile
+      alert('Successfully registered user');
+      console.log('Successfully registered user');
+      navigate('/');
+
+    }
+  }
 
   // Open the login modal
   const openLoginModal = () => {
@@ -40,7 +73,8 @@ export default function App() {
     setLoginModalOpen(false);
   };
 
-  // Login handler (FIXME with real auth logic)
+  //FIXME (with real auth logic)
+  // Login handler
   const handleLogin = (username, password) => {
     // Simulate authentication by checking against dummy user data
     const user = dummyUsers.find(
