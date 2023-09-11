@@ -44,7 +44,7 @@ export default function App() {
   //FIXME (with real registration logic)
   const handleRegistration = (username, password) => {
     const userExists = dummyUsers.find(
-      (u) => u.username === username && u.password === password
+      (u) => u.username === username
     );
 
     if (userExists) {
