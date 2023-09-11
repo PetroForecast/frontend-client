@@ -11,6 +11,7 @@ import UserProfile from './components/UserProfile';
 import HomePage from './pages/HomePage';
 import Dashboard from './containers/Dashboard';
 import LoginModal from './components/LoginModal';
+import RegistrationModal from './components/RegistrationModal';
 import { dummyUsers } from './data/users';
 
 export default function App() {
@@ -32,12 +33,12 @@ export default function App() {
 
   // Open the registration modal
   const openRegistrationModal = () => {
-    setLoginModalOpen(true);
+    setRegistrationModalOpen(true);
   };
 
   // Close the registration modal
   const closeRegistrationModal = () => {
-    setLoginModalOpen(false);
+    setRegistrationModalOpen(false);
   };
 
   //FIXME (with real registration logic)
@@ -134,12 +135,19 @@ export default function App() {
         onLogout={handleLogout}
       />) : (<DefaultAppBar
         onLogin={openLoginModal}
+        onRegistration={openRegistrationModal}
       />)}
 
       <LoginModal
         open={isLoginModalOpen}
         onClose={closeLoginModal}
         onLogin={handleLogin}
+      />
+
+      <RegistrationModal
+        open={isRegistrationModalOpen}
+        onClose={closeRegistrationModal}
+        onRegistration={handleRegistration}
       />
 
 

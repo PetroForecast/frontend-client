@@ -34,40 +34,6 @@ export default function DefaultAppBar(props) {
           >
             PETROFORECAST
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <Button
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-              onClick={props.onLogin}
-            >
-              Login
-            </Button>
-            <Menu
-              id="menu-appbar"
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
           <OilBarrelIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -109,7 +75,7 @@ export default function DefaultAppBar(props) {
             <Button
               variant="outlined"
               color="inherit"
-              onClick={props.onRegister}
+              onClick={props.onRegistration}
               sx={{ ml: 2 }}
             >
               Register
