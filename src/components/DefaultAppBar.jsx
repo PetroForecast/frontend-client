@@ -73,7 +73,7 @@ export default function DefaultAppBar(props) {
               onClick={props.onLogin}
               sx={{
                 '&:hover': {
-                  backgroundColor: 'rgba(0, 64, 255, 0.3)',
+                  backgroundColor: 'rgba(0, 191, 255, 0.3)',
                 },
               }}
             >
@@ -86,7 +86,7 @@ export default function DefaultAppBar(props) {
               sx={{
                 ml: 2,
                 '&:hover': {
-                  backgroundColor: 'rgba(0, 64, 255, 0.3)',
+                  backgroundColor: 'rgba(0, 191, 255, 0.3)',
                 },
               }}
             >
