@@ -106,6 +106,14 @@ export default function DefaultAppBar(props) {
             >
               Login
             </Button>
+            <Button
+              variant="outlined"
+              color="inherit"
+              onClick={props.onRegister}
+              sx={{ ml: 2 }}
+            >
+              Register
+            </Button>
           </Box>
         </Toolbar>
       </Container>
