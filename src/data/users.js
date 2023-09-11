@@ -2,6 +2,7 @@
 export const dummyUsers = [
   {
     id: 1,
+    role: 'admin',
     username: 'user1',
     password: 'pw1',
     email: 'user1@example.com',
@@ -12,6 +13,7 @@ export const dummyUsers = [
   },
   {
     id: 2,
+    role: 'client',
     username: 'user2',
     password: 'pw2',
     email: 'user2@example.com',

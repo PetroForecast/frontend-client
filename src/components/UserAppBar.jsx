@@ -42,7 +42,7 @@ export default function UserAppBar(props) {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="false">
         <Toolbar disableGutters>
           <OilBarrelIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
