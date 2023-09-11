@@ -64,11 +64,18 @@ export default function DefaultAppBar(props) {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{
+            flexGrow: 0,
+          }}>
             <Button
               variant="outlined"
               color="inherit"
               onClick={props.onLogin}
+              sx={{
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 64, 255, 0.3)',
+                },
+              }}
             >
               Login
             </Button>
@@ -76,7 +83,12 @@ export default function DefaultAppBar(props) {
               variant="outlined"
               color="inherit"
               onClick={props.onRegistration}
-              sx={{ ml: 2 }}
+              sx={{
+                ml: 2,
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 64, 255, 0.3)',
+                },
+              }}
             >
               Register
             </Button>
