@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogTitle, TextField, Button } from '@mui/material';
+import { Dialog, DialogContent, DialogTitle, TextField, Button, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 // This function takes in props and updates them based on user input
 const LoginModal = ({ open, onClose, onLogin }) => {
@@ -14,7 +15,20 @@ const LoginModal = ({ open, onClose, onLogin }) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Login</DialogTitle>
+      <DialogTitle>
+        Login
+        <IconButton
+          aria-label='close'
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
       <DialogContent>
         <TextField
           label="Username"
