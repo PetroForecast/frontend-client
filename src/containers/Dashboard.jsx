@@ -1,4 +1,5 @@
 import React from 'react';
+import FuelQuoteHistoryTable from '../components/FuelQuoteHistoryTable';
 
 //Todo add components
 //Todo prompt user to complete profile if not completed 
@@ -13,6 +14,7 @@ function Dashboard({ user }) {
           <p>Username: {user.username}</p>
           <p>Email: {user.email}</p>
           {/* Display other user-specific information as needed */}
+          { <FuelQuoteHistoryTable /> }
         </div>
       )}
     </div>
