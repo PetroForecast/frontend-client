@@ -12,6 +12,7 @@ import HomePage from './pages/HomePage';
 import Dashboard from './containers/Dashboard';
 import LoginModal from './components/LoginModal';
 import RegistrationModal from './components/RegistrationModal';
+import ProductsPage from './pages/ProductsPage'; 
 import { dummyUsers } from './data/users';
 
 export default function App() {
@@ -173,9 +174,9 @@ export default function App() {
             )
           }
         />
+        <Route path="/products" element={<ProductsPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-
     </>
   );
 }
