@@ -3,17 +3,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
 
 // Gallons Requested, Delivery Address, Delivery Date, Suggested Price / gallon, Total Amount Due
-// switch to ^ data, move create data to new file(?) 
 
-// getting data in here, its here, less running back and forth 
-// cons getting data here, maybe more exposed, idk
-
-// First set up table, pagenations, sorting functions -check
-// Next, add data to chart -check
-// Next, see how we can change the formatting -
-// All this before wednesday
-
-const columns = [
+const columns = [ //column definition for table
     {field: 'gallonsRequested', headerName: 'Gallons Requested', width: 200 },
     {field: 'deliveryAddress', headerName: 'Delivery Address', width: 200 },
     {field: 'deliveryDate', headerName: 'Delivery Date', width: 200 },
@@ -21,7 +12,7 @@ const columns = [
     {field: 'amountDue', headerName: 'Total Amount Due', width: 200 },
 ];
 
-const rows = [
+const rows = [ // data for table
     { id: 1, gallonsRequested: '2', deliveryAddress: '123 mcdonalds street', deliveryDate: '9-11-24', pricePerGallon: '2.56', amountDue: '327.12' },
     { id: 2, gallonsRequested: '4', deliveryAddress: '124 mcdonalds street', deliveryDate: '9-12-24', pricePerGallon: '2.56', amountDue: '327.12' },
     { id: 3, gallonsRequested: '6', deliveryAddress: '125 mcdonalds street', deliveryDate: '9-13-24', pricePerGallon: '2.56', amountDue: '327.12' },
@@ -41,13 +32,13 @@ export default function FuelQuoteHistoryTable() {
       <DataGrid
         rows={rows}
         columns={columns}
-        initialState={{
+        initialState={{ //sets the defualt look of table
           pagination: {
             paginationModel: { page: 0, pageSize: 5 },
           },
         }}
         pageSizeOptions={[5, 10]}
-        checkboxSelection
+        checkboxSelection // adds checkboxes to table
       />
     </div>
   );
