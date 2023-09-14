@@ -14,6 +14,7 @@ import ProductsPage from '../pages/ProductsPage';
 import { useHistory } from 'react-router-dom';
 const pages = ['Products', 'Pricing', 'Blog'];
 
+
 export default function DefaultAppBar(props) {
 
   return (
