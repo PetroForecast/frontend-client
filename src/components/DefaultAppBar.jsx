@@ -10,6 +10,8 @@ import OilBarrelIcon from '@mui/icons-material/OilBarrel';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import ProductsPage from '../pages/ProductsPage';
+import { useHistory } from 'react-router-dom';
 const pages = ['Products', 'Pricing', 'Blog'];
 
 export default function DefaultAppBar(props) {
@@ -61,7 +63,7 @@ export default function DefaultAppBar(props) {
                 key={page}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <a href={`/${page}`} style={{textDecoration: 'none'}}>{page}</a>
               </Button>
             ))}
           </Box>

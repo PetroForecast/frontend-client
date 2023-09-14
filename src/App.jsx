@@ -2,7 +2,6 @@
 - role based user authentication
 - some logic to determine if the user is logged in, e.g., checking a token, etc.
 */
-
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import DefaultAppBar from './components/DefaultAppBar';
