@@ -10,8 +10,6 @@ import OilBarrelIcon from '@mui/icons-material/OilBarrel';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import ProductsPage from '../pages/ProductsPage';
-import { useHistory } from 'react-router-dom';
 const pages = ['Products', 'Pricing', 'Blog'];
 
 
