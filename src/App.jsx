@@ -159,7 +159,7 @@ export default function App() {
             isLoggedIn ? (
               <UserProfile user={currentUser} />
             ) : (
-              <Navigate to="/" />
+              <Navigate to="/profile" />
             )
           }
         />
@@ -169,7 +169,7 @@ export default function App() {
             isLoggedIn ? (
               <Dashboard user={currentUser} />
             ) : (
-              <Navigate to="/" />
+              <Navigate to="/dashboard" />
             )
           }
         />
