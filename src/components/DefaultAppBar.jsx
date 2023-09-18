@@ -1,3 +1,5 @@
+// 56 - 64 change the code to the products page 
+
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -9,6 +11,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 const pages = ['Products', 'Pricing', 'Blog'];
+
 
 export default function DefaultAppBar(props) {
 
@@ -59,7 +62,7 @@ export default function DefaultAppBar(props) {
                 key={page}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <a href={`/${page}`} style={{textDecoration: 'none'}}>{page}</a>
               </Button>
             ))}
           </Box>
