@@ -203,7 +203,7 @@ export default function App() {
           element={
             isLoggedIn ? (
               isProfileComplete ? ( // Redirect to dashboard if profile is complete
-                <Navigate to="/dashboard" />
+                <Dashboard user={currentUser} />
               ) : (
                 <Navigate to="/profile-completion" /> // Nav to completion form
               )
