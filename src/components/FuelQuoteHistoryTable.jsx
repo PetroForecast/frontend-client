@@ -1,6 +1,8 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { Paper } from "@mui/material";
 
 // Gallons Requested, Delivery Address, Delivery Date, Suggested Price / gallon, Total Amount Due
 
@@ -87,22 +89,24 @@ const rows = [
 
 export default function FuelQuoteHistoryTable() {
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        Fuel Quote History
-      </Typography>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          //sets the defualt look of table
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection // adds checkboxes to table
-      />
-    </div>
+    <Paper elevation={4} sx={{ p: 3 }}>
+      <Box style={{ height: "auto", overflow: "auto" }}>
+        <Typography component="h2" variant="h4" color="primary" gutterBottom>
+          Fuel Quote History
+        </Typography>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{
+            //sets the defualt look of table
+            pagination: {
+              paginationModel: { page: 0, pageSize: 5 },
+            },
+          }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection // adds checkboxes to table
+        />
+      </Box>
+    </Paper>
   );
 }

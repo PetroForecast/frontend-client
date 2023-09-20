@@ -1,7 +1,7 @@
 import React from "react";
 import FuelQuoteHistoryTable from "../components/FuelQuoteHistoryTable";
 import FuelQuoteForm from "../components/FuelQuoteForm";
-import { Grid, Paper, Container, Typography } from "@mui/material";
+import { Grid, Paper, Container, Typography, Item } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
@@ -13,31 +13,27 @@ import { Navigate } from "react-router-dom";
 function Dashboard({ user }) {
   return (
     <div>
-      <h1>Welcome to the Dashboard</h1>
+      <Typography gutterBottom variant="h3">Welcome to the Dashboard</Typography>
       {user && (
         <>
-          <div>
-            <h2>User Information</h2>
-            <p>Username: {user.username}</p>
-            <p>Email: {user.email}</p>
-          </div>
+          <Paper elevation={4} sx={{ p: 3.8, mb: 2 }}>
+            <Typography gutterBottom variant="h4">User Information</Typography>
+            <Typography variant="body1">Username: {user.username}</Typography>
+            <Typography variant="body1">Email: {user.email}</Typography>
+          </Paper>
 
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
               <FuelQuoteForm />
             </Grid>
             <Grid item xs={12} md={8}>
-              <Paper
-                elevation="4"
-                sx={{
-                  p: 3.8,
-                }}
-              >
-                <FuelQuoteHistoryTable />
-              </Paper>
+              <FuelQuoteHistoryTable />
             </Grid>
-            {/* Display other user-specific information as needed */}
+            <Grid item xs={12} md={4}>
+              {/* More Grid items can live here */}
+            </Grid>
           </Grid>
+
         </>
       )}
     </div>
