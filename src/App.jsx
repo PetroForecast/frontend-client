@@ -11,8 +11,9 @@ import HomePage from './pages/HomePage';
 import Dashboard from './containers/Dashboard';
 import LoginModal from './components/LoginModal';
 import RegistrationModal from './components/RegistrationModal';
-import ProductsPage from './pages/ProductsPage'; 
+import ProductsPage from './pages/ProductsPage';
 import { dummyUsers } from './data/users';
+import { createTheme, ThemeProvider } from "@mui/material";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -121,7 +122,8 @@ export default function App() {
   };
 
   return (
-    <>
+    <div>
+
       {isLoggedIn ? (
         <UserAppBar
           onProfileClick={handleProfileClick}
@@ -168,6 +170,6 @@ export default function App() {
         <Route path="/products" element={<ProductsPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </>
+    </div>
   );
 }

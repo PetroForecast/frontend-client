@@ -13,10 +13,10 @@ import { Navigate } from "react-router-dom";
 function Dashboard({ user }) {
   return (
     <div>
-      <Typography gutterBottom variant="h3">Welcome to the Dashboard</Typography>
+      <Typography variant="h3">Welcome to the Dashboard</Typography>
       {user && (
         <>
-          <Paper elevation={4} sx={{ p: 3.8, mb: 2 }}>
+          <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
             <Typography gutterBottom variant="h4">User Information</Typography>
             <Typography variant="body1">Username: {user.username}</Typography>
             <Typography variant="body1">Email: {user.email}</Typography>
