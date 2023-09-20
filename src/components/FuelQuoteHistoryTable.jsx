@@ -89,7 +89,7 @@ const rows = [
 
 export default function FuelQuoteHistoryTable() {
   return (
-    <Paper elevation={4} sx={{ p: 3 }}>
+    <Paper elevation={4} sx={{ p: 2 }}>
       <Box style={{ height: "auto", overflow: "auto" }}>
         <Typography component="h2" variant="h4" color="primary" gutterBottom>
           Fuel Quote History
