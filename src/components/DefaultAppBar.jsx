@@ -62,7 +62,7 @@ export default function DefaultAppBar(props) {
                 key={page}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <a href={`/${page}`} style={{textDecoration: 'none'}}>{page}</a>
+                <a href={`/${page.toLowerCase()}`} style={{ textDecoration: 'none' }}>{page.toLowerCase()}</a>
               </Button>
             ))}
           </Box>
