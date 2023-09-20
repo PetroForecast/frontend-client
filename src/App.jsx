@@ -13,22 +13,30 @@ import LoginModal from './components/LoginModal';
 import RegistrationModal from './components/RegistrationModal';
 import ProductsPage from './pages/ProductsPage';
 import { dummyUsers } from './data/users';
-import { createTheme, ThemeProvider } from "@mui/material";
+import ProfileCompletionForm from "./components/ProfileCompletionForm";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  // Add profile completion state (FIXME: backend implementation)
+  const [isProfileComplete, setProfileComplete] = useState(null);
   const navigate = useNavigate();
 
   //TESTING
   // Load user data from localStorage on initial load
   useEffect(() => {
+
+    //FIXME: add real logic to check database if the profile was complete here
+
     const storedUser = localStorage.getItem("currentUser");
+    const storedProfileCompleted = localStorage.getItem("profileCompleted");
     if (storedUser) {
       setCurrentUser(JSON.parse(storedUser));
       setIsLoggedIn(true);
+      setProfileComplete(storedProfileCompleted === "true");
+      // setProfileComplete(userHasCompletedProfile);
     }
   }, []);
 
@@ -87,7 +95,17 @@ export default function App() {
       // Save user data in localStorage
       localStorage.setItem("currentUser", JSON.stringify(user));
       //console.log(localStorage.getItem('currentUser'))
-      navigate("/dashboard"); // Navigate to the dashboard after successful login
+
+      setProfileComplete(false);
+
+      if (!isProfileComplete) {
+        navigate("/profile-completion");
+      } else {
+        // Redirect to the dashboard if the profile is complete
+        navigate("/dashboard");
+      }
+
+
     } else {
       // Handle login failure (e.g., show an error message)
       console.log("Failed to login");
@@ -119,6 +137,11 @@ export default function App() {
     // Navigate to the Dashboard page
     console.log("Dashboard clicked");
     navigate("/dashboard");
+  };
+
+  const handleProfileCompletion = (profileComplete) => {
+    setProfileComplete(profileComplete);
+    localStorage.setItem("profileCompleted", profileComplete ? "true" : "false");
   };
 
   return (
@@ -162,9 +185,31 @@ export default function App() {
           }
         />
         <Route
+          path="/profile-completion"
+          element={
+            isLoggedIn ? (
+              isProfileComplete ? ( // Redirect to dashboard if profile is complete
+                <Navigate to="/dashboard" />
+              ) : (
+                <ProfileCompletionForm onComplete={handleProfileCompletion} /> // Show profile completion form
+              )
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
           path="/dashboard"
           element={
-            isLoggedIn ? <Dashboard user={currentUser} /> : <Navigate to="/" />
+            isLoggedIn ? (
+              isProfileComplete ? ( // Redirect to dashboard if profile is complete
+                <Dashboard user={currentUser} />
+              ) : (
+                <Navigate to="/profile-completion" /> // Nav to completion form
+              )
+            ) : (
+              <Navigate to="/" />
+            )
           }
         />
         <Route path="/products" element={<ProductsPage />} />
