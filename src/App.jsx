@@ -3,16 +3,16 @@
 - some logic to determine if the user is logged in, e.g., checking a token, etc.
 */
 
-import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import DefaultAppBar from './components/DefaultAppBar';
-import UserAppBar from './components/UserAppBar';
-import UserProfile from './components/UserProfile';
-import HomePage from './pages/HomePage';
-import Dashboard from './containers/Dashboard';
-import LoginModal from './components/LoginModal';
-import RegistrationModal from './components/RegistrationModal';
-import { dummyUsers } from './data/users';
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import DefaultAppBar from "./components/DefaultAppBar";
+import UserAppBar from "./components/UserAppBar";
+import UserProfile from "./components/UserProfile";
+import HomePage from "./pages/HomePage";
+import Dashboard from "./containers/Dashboard";
+import LoginModal from "./components/LoginModal";
+import RegistrationModal from "./components/RegistrationModal";
+import { dummyUsers } from "./data/users";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,7 +24,7 @@ export default function App() {
   //TESTING
   // Load user data from localStorage on initial load
   useEffect(() => {
-    const storedUser = localStorage.getItem('currentUser');
+    const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
       setCurrentUser(JSON.parse(storedUser));
       setIsLoggedIn(true);
@@ -43,26 +43,22 @@ export default function App() {
 
   //FIXME (with real registration logic)
   const handleRegistration = (username, password) => {
-    const userExists = dummyUsers.find(
-      (u) => u.username === username
-    );
+    const userExists = dummyUsers.find((u) => u.username === username);
 
     if (userExists) {
       // FIXME
       // Handle registration failure
-      alert('Failed to register');
-      console.log('Failed to register');
-    }
-    else {
+      alert("Failed to register");
+      console.log("Failed to register");
+    } else {
       // FIXME
       // Insert data into database
       // After client registers they should login first to complete the profile
-      alert('Successfully registered user');
-      console.log('Successfully registered user');
-      navigate('/');
-
+      alert("Successfully registered user");
+      console.log("Successfully registered user");
+      navigate("/");
     }
-  }
+  };
 
   // Open the login modal
   const openLoginModal = () => {
@@ -88,55 +84,56 @@ export default function App() {
       setCurrentUser(user);
 
       // Save user data in localStorage
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      localStorage.setItem("currentUser", JSON.stringify(user));
       //console.log(localStorage.getItem('currentUser'))
-      navigate('/dashboard'); // Navigate to the dashboard after successful login
+      navigate("/dashboard"); // Navigate to the dashboard after successful login
     } else {
       // Handle login failure (e.g., show an error message)
-      console.log('Failed to login')
+      console.log("Failed to login");
     }
   };
 
   // Logout handler (FIXME with real logic)
   const handleLogout = () => {
     // Clear the authentication token and set isLoggedIn to false.
-    console.log('Logout clicked');
+    console.log("Logout clicked");
     // Clear user data from localStorage
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem("currentUser");
     setIsLoggedIn(false);
     setCurrentUser(null);
-    navigate('/')
+    navigate("/");
   };
-
 
   // Profile click handler
   const handleProfileClick = () => {
     // Handle the Profile click event here
     // Navigate to the Profile page
-    console.log('Profile clicked');
-    navigate('/profile')
+    console.log("Profile clicked");
+    navigate("/profile");
   };
-
 
   // Dashboard click handler
   const handleDashboardClick = () => {
     // Handle the Dashboard click event here
     // Navigate to the Dashboard page
-    console.log('Dashboard clicked');
-    navigate('/dashboard')
+    console.log("Dashboard clicked");
+    navigate("/dashboard");
   };
-
 
   return (
     <>
-      {isLoggedIn ? (<UserAppBar
-        onProfileClick={handleProfileClick}
-        onDashboardClick={handleDashboardClick}
-        onLogout={handleLogout}
-      />) : (<DefaultAppBar
-        onLogin={openLoginModal}
-        onRegistration={openRegistrationModal}
-      />)}
+      {isLoggedIn ? (
+        <UserAppBar
+          onProfileClick={handleProfileClick}
+          onDashboardClick={handleDashboardClick}
+          onLogout={handleLogout}
+        />
+      ) : (
+        <DefaultAppBar
+          onLogin={openLoginModal}
+          onRegistration={openRegistrationModal}
+        />
+      )}
 
       <LoginModal
         open={isLoginModalOpen}
@@ -149,7 +146,6 @@ export default function App() {
         onClose={closeRegistrationModal}
         onRegistration={handleRegistration}
       />
-
 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -166,17 +162,11 @@ export default function App() {
         <Route
           path="/dashboard"
           element={
-            isLoggedIn ? (
-              <Dashboard user={currentUser} />
-            ) : (
-              <Navigate to="/" />
-            )
+            isLoggedIn ? <Dashboard user={currentUser} /> : <Navigate to="/" />
           }
         />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-
     </>
   );
 }
-
