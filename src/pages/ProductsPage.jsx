@@ -44,8 +44,6 @@ function ProductPage() {
     color: 'black', // Change the text color as needed
   };
 
-  // Apply background color to the body element
-  document.body.style.backgroundColor = '#fde68a';
 
   return (
     <div>

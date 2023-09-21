@@ -12,6 +12,9 @@ import Dashboard from './containers/Dashboard';
 import LoginModal from './components/LoginModal';
 import RegistrationModal from './components/RegistrationModal';
 import ProductsPage from './pages/ProductsPage';
+import PricingPage from './pages/PricingPage'; 
+import BlogPage from './pages/BlogPage'; 
+import DemoPage from './pages/DemoPage'; 
 import { dummyUsers } from './data/users';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
 
@@ -145,6 +148,8 @@ export default function App() {
   };
 
   return (
+    // Body background color 
+    document.body.style.backgroundColor = 'rgba(205,226,184,255)',
     <div>
 
       {isLoggedIn ? (
@@ -212,7 +217,10 @@ export default function App() {
             )
           }
         />
+        <Route path="/demo" element={<DemoPage />} />
         <Route path="/products" element={<ProductsPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/blog" element={<BlogPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
