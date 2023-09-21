@@ -15,8 +15,8 @@ import ProductsPage from './pages/ProductsPage';
 import { dummyUsers } from './data/users';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
 
-export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export default function App() { 
+  const [isLoggedIn, setIsLoggedIn] = useState(null); // made isloggedin null, on render, it would render defualt with loader
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -37,6 +37,9 @@ export default function App() {
       setIsLoggedIn(true);
       setProfileComplete(storedProfileCompleted === "true");
       // setProfileComplete(userHasCompletedProfile);
+    }
+    else{
+      setIsLoggedIn(false);
     }
   }, []);
 
@@ -147,17 +150,26 @@ export default function App() {
   return (
     <div>
 
-      {isLoggedIn ? (
-        <UserAppBar
-          onProfileClick={handleProfileClick}
-          onDashboardClick={handleDashboardClick}
-          onLogout={handleLogout}
-        />
-      ) : (
+      {isLoggedIn == null ? (
         <DefaultAppBar
+          isLoggedInNull={true}
           onLogin={openLoginModal}
           onRegistration={openRegistrationModal}
         />
+      ) : (
+        isLoggedIn == true ? (
+          <UserAppBar
+            onProfileClick={handleProfileClick}
+            onDashboardClick={handleDashboardClick}
+            onLogout={handleLogout}
+          />
+        ) : (
+          <DefaultAppBar
+            isLoggedInNull={false}
+            onLogin={openLoginModal}
+            onRegistration={openRegistrationModal}
+          />
+        )
       )}
 
       <LoginModal

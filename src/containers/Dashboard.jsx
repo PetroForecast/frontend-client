@@ -1,7 +1,7 @@
 import React from "react";
 import FuelQuoteHistoryTable from "../components/FuelQuoteHistoryTable";
 import FuelQuoteForm from "../components/FuelQuoteForm";
-import { Grid, Paper, Container, Typography, Item } from "@mui/material";
+import { Grid, Paper, Container, Typography, Item, Tab, TabContext, TabList, TabPanel } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
@@ -10,14 +10,16 @@ import { Navigate } from "react-router-dom";
 //Todo prompt user to complete profile if not completed
 //(After client registers they should login first to complete the profile)
 
+//Add items into tab folders
+
 function Dashboard({ user }) {
   return (
     <div>
-      <Typography variant="h3">Welcome to the Dashboard</Typography>
+      <Typography variant="h3" align="center">Welcome to the Dashboard</Typography>
       {user && (
         <>
           <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
-            <Typography gutterBottom variant="h4">User Information</Typography>
+            <Typography component="h2" variant="h4" color="primary" gutterBottom>User Information</Typography>
             <Typography variant="body1">Username: {user.username}</Typography>
             <Typography variant="body1">Email: {user.email}</Typography>
           </Paper>
