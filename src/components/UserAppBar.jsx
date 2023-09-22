@@ -1,5 +1,3 @@
-/*121 - 130 change the code to products page */
-
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Products', 'Pricing', 'Blog', 'Demo'];
 
 
 export default function UserAppBar(props) {
@@ -127,9 +125,10 @@ export default function UserAppBar(props) {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block', '&:hover': {backgroundColor: '#22c55e',}, }}
               >
-                {page}
+                <a href={`/${page.toLowerCase()}`} style={{ textDecoration: 'none', color: 'white', }}>{page.toLowerCase()}</a>
+                {/* {page} */}
               </Button>
             ))}
           </Box>

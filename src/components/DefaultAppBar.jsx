@@ -1,5 +1,3 @@
-// 56 - 64 change the code to the products page 
-
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,8 +9,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import CircularProgress from '@mui/material/CircularProgress';
-
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Products', 'Pricing', 'Blog', 'Demo'];
 
 
 export default function DefaultAppBar(props) {
@@ -62,9 +59,9 @@ export default function DefaultAppBar(props) {
             {pages.map((page) => (
               <Button
                 key={page}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block', '&:hover': {backgroundColor: '#22c55e',}, }} 
               >
-                <a href={`/${page.toLowerCase()}`} style={{ textDecoration: 'none' }}>{page.toLowerCase()}</a>
+                <a href={`/${page.toLowerCase()}`} style={{ textDecoration: 'none', color: 'white', }}>{page.toLowerCase()}</a>
               </Button>
             ))}
           </Box>
