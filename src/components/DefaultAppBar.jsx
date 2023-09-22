@@ -110,11 +110,13 @@ import Button from '@mui/material/Button';
 const pages = ['Products', 'Pricing', 'Blog', 'Demo'];
 
 export default function DefaultAppBar(props) {
-  const [activeLink, setActiveLink] = React.useState(''); // State to track the active link
+  //const [activeLink, setActiveLink] = React.useState(''); // State to track the active link
 
   const handleLinkClick = (page) => {
     console.log('Clicked:', page.toLowerCase());
-    setActiveLink(page.toLowerCase()); // Set the active link state
+    //setActiveLink(page.toLowerCase()); // Set the active link state
+    // store link
+    localStorage.setItem("currentPage", page.toLowerCase());
   };
 
   return (
@@ -136,6 +138,7 @@ export default function DefaultAppBar(props) {
               color: 'inherit',
               textDecoration: 'none',
             }}
+            onClick={() => handleLinkClick("")}
           >
             PETROFORECAST
           </Typography>
@@ -167,7 +170,7 @@ export default function DefaultAppBar(props) {
                   color: 'white',
                   display: 'block',
                   '&:hover': { backgroundColor: '#22c55e' },
-                  backgroundColor: activeLink === page.toLowerCase() ? 'orange' : 'inherit', // Set the background color based on activeLink state
+                  backgroundColor: localStorage.getItem("currentPage") === page.toLowerCase() ? 'orange' : 'inherit', // Set the background color based on activeLink state
                 }}
                 onClick={() => handleLinkClick(page)}
               >
