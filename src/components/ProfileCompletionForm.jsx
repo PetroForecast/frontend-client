@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
     TextField,
     Button,
-    Box,
     Typography,
     FormControl,
     InputLabel,
@@ -20,6 +19,10 @@ function ProfileCompletionForm({ onComplete }) {
         state: "",
         zipcode: "",
     });
+    const [zipCodeError, setZipCodeError] = useState(false)
+    const [fullNameError, setFullNameError] = useState(false)
+    const [addressError, setAddressError] = useState(false)
+    const [cityError, setCityError] = useState(false)
 
     const stateOptions = [
         { abbreviation: "AL", name: "Alabama" },
@@ -76,7 +79,54 @@ function ProfileCompletionForm({ onComplete }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        if(name === "zipcode")
+        {
+            if(value.length < 5 || value.length > 9)
+            {
+                setFormData({...formData, [name]: value});
+                setZipCodeError(true)
+            }
+            else{
+                setFormData({...formData, [name]: value});
+                setZipCodeError(false)
+            }
+        }
+        else if(name === "fullName"){
+            if(value.length > 50)
+            {
+                setFormData({...formData, [name]: value});
+                setFullNameError(true)
+            }
+            else{
+                setFormData({...formData, [name]: value});
+                setFullNameError(false)
+            }
+        }
+
+        else if(name === "address1" || name === "address2"){
+            if(value.length > 100)
+            {
+                setFormData({...formData, [name]: value});
+                setAddressError(true)
+            }
+            else{
+                setFormData({...formData, [name]: value});
+                setAddressError(false)
+            }
+        }
+
+        else if(name === "city"){
+            if(value.length > 100)
+            {
+                setFormData({...formData, [name]: value});
+                setCityError(true)
+            }
+            else{
+                setFormData({...formData, [name]: value});
+                setCityError(false)
+            }
+        }
+
     };
 
     //FIXME with real data validation
@@ -87,13 +137,18 @@ function ProfileCompletionForm({ onComplete }) {
         // Set profileComplete to true in the database
         // await updateProfile(formData);
         // onComplete();
-
-        try {
-            //await updateProfile(formData);
-            onComplete(true); // Set isProfileComplete=true
-        } catch (error) {
-            alert("Error updating profile:", error);
-            console.error("Error updating profile:", error);
+        if(zipCodeError)
+        {
+            alert("Error. Please enter appropriate values")
+        }
+        else{
+            try {
+                //await updateProfile(formData);
+                onComplete(true); // Set isProfileComplete=true
+            } catch (error) {
+                alert("Error updating profile:", error);
+                console.error("Error updating profile:", error);
+            }
         }
     };
 
@@ -110,6 +165,8 @@ function ProfileCompletionForm({ onComplete }) {
                     required
                     value={formData.fullName}
                     onChange={handleChange}
+                    error = {fullNameError}
+                    helperText = {fullNameError && "Fullname cannot be more than 50 chararacters"}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -122,6 +179,8 @@ function ProfileCompletionForm({ onComplete }) {
                     required
                     value={formData.address1}
                     onChange={handleChange}
+                    error = {addressError}
+                    helperText = {addressError && "Address cannot be more than 100 chararacters"}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -132,6 +191,8 @@ function ProfileCompletionForm({ onComplete }) {
                     name="address2"
                     label="Address 2"
                     value={formData.address2}
+                    error = {addressError}
+                    helperText = {addressError && "Address cannot be more than 100 chararacters"}
                     onChange={handleChange}
                     InputLabelProps={{
                         shrink: true,
@@ -144,6 +205,8 @@ function ProfileCompletionForm({ onComplete }) {
                     label="City"
                     required
                     value={formData.city}
+                    error = {cityError}
+                    helperText = {cityError && "City cannot be more than 100 chararacters"}
                     onChange={handleChange}
                     InputLabelProps={{
                         shrink: true,
@@ -184,6 +247,8 @@ function ProfileCompletionForm({ onComplete }) {
                     InputLabelProps={{
                         shrink: true,
                     }}
+                    error={zipCodeError}
+                    helperText={zipCodeError && "Zip code must have at least 5 characters and cannot be more than 9 characters"}
                     sx={{ marginBottom: 2 }}
                 />
                 <Button type="submit" variant="contained" color="primary">
