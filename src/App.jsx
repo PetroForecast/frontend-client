@@ -98,6 +98,7 @@ export default function App() {
       // Save user data in localStorage
       localStorage.setItem("currentUser", JSON.stringify(user));
       //console.log(localStorage.getItem('currentUser'))
+      localStorage.setItem("currentPage", "");
 
       setProfileComplete(false);
 
@@ -123,6 +124,7 @@ export default function App() {
     localStorage.removeItem("currentUser");
     setIsLoggedIn(false);
     setCurrentUser(null);
+    localStorage.setItem("currentPage", ""); // for app bar highlight
     navigate("/");
   };
 
@@ -131,6 +133,7 @@ export default function App() {
     // Handle the Profile click event here
     // Navigate to the Profile page
     console.log("Profile clicked");
+    localStorage.setItem("currentPage", "");
     navigate("/profile");
   };
 
@@ -139,6 +142,7 @@ export default function App() {
     // Handle the Dashboard click event here
     // Navigate to the Dashboard page
     console.log("Dashboard clicked");
+    localStorage.setItem("currentPage", "");
     navigate("/dashboard");
   };
 

@@ -42,6 +42,11 @@ export default function UserAppBar(props) {
     setAnchorElUser(null);
   };
 
+  const handleLinkClick = (page) => {
+    console.log('Clicked:', page.toLowerCase());
+    localStorage.setItem("currentPage", page.toLowerCase());
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="false">
@@ -61,6 +66,7 @@ export default function UserAppBar(props) {
               color: 'inherit',
               textDecoration: 'none',
             }}
+            onClick={() => handleLinkClick("")}
           >
             PETROFORECAST
           </Typography>
@@ -123,9 +129,15 @@ export default function UserAppBar(props) {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block', '&:hover': {backgroundColor: '#22c55e',}, }}
+              key={page}
+              sx={{
+                my: 2,
+                color: 'white',
+                display: 'block',
+                '&:hover': { backgroundColor: '#22c55e' },
+                backgroundColor: localStorage.getItem("currentPage") === page.toLowerCase() ? 'orange' : 'inherit', // Set the background color based on activeLink state
+              }}
+              onClick={() => handleLinkClick(page)}
               >
                 <a href={`/${page.toLowerCase()}`} style={{ textDecoration: 'none', color: 'white', }}>{page.toLowerCase()}</a>
                 {/* {page} */}
