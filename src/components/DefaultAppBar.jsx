@@ -8,6 +8,7 @@ import OilBarrelIcon from '@mui/icons-material/OilBarrel';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import CircularProgress from '@mui/material/CircularProgress';
 const pages = ['Products', 'Pricing', 'Blog', 'Demo'];
 
 
@@ -65,35 +66,39 @@ export default function DefaultAppBar(props) {
             ))}
           </Box>
 
-          <Box sx={{
-            flexGrow: 0,
-          }}>
-            <Button
-              variant="outlined"
-              color="inherit"
-              onClick={props.onLogin}
-              sx={{
-                '&:hover': {
-                  backgroundColor: 'rgba(0, 191, 255, 0.3)',
-                },
-              }}
-            >
-              Login
-            </Button>
-            <Button
-              variant="outlined"
-              color="inherit"
-              onClick={props.onRegistration}
-              sx={{
-                ml: 2,
-                '&:hover': {
-                  backgroundColor: 'rgba(0, 191, 255, 0.3)',
-                },
-              }}
-            >
-              Register
-            </Button>
-          </Box>
+          {props.isLoggedInNull == true ? (
+            <CircularProgress />
+          ):(
+            <Box sx={{
+              flexGrow: 0,
+            }}>
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={props.onLogin}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 191, 255, 0.3)',
+                  },
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={props.onRegistration}
+                sx={{
+                  ml: 2,
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 191, 255, 0.3)',
+                  },
+                }}
+              >
+                Register
+              </Button>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
