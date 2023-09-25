@@ -9,23 +9,47 @@ const RegistrationModal = ({ open, onClose, onRegistration }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [passwordsMatch, setPasswordsMatch] = useState(true);
 
+    // Cleanup function to reset state
+    const resetState = () => {
+        setUsername('');
+        setPassword('');
+        setConfirmPassword('');
+        setPasswordsMatch(true);
+    };
+
+    const handleClose = () => {
+        // Call the cleanup function before closing the modal
+        resetState();
+        onClose();
+    };
+    
+
     const handleRegistration = () => {
-        if (password === confirmPassword) {
-            onRegistration(username, password);
-            onClose();
+        if(password && confirmPassword && username){
+            if (password === confirmPassword) {
+                onRegistration(username, password);
+                handleClose();
+            }
+            else {
+                setPasswordsMatch(false);
+            }
+        
         }
-        else {
-            setPasswordsMatch(false);
+        else{
+            alert("Please complete all the fields.")
         }
+
+
+    
     };
 
     return (
-        <Dialog open={open} onClose={onClose}>
+        <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
                 Register
                 <IconButton
                     aria-label='close'
-                    onClick={onClose}
+                    onClick={handleClose}
                     sx={{
                         position: 'absolute',
                         right: 8,
