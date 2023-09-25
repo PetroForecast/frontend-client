@@ -15,6 +15,82 @@ import Tab from '@mui/material/Tab';
 //Todo prompt user to complete profile if not completed
 //(After client registers they should login first to complete the profile)
 
+//quotes
+const rows = [
+  // data for table
+  {
+    id: 1,
+    gallonsRequested: 2,
+    deliveryAddress: "123 mcdonalds street",
+    deliveryDate: "9-11-24",
+    pricePerGallon: 2.56,
+    amountDue: 327.12,
+  },
+  {
+    id: 2,
+    gallonsRequested: 4,
+    deliveryAddress: "124 mcdonalds street",
+    deliveryDate: "9-12-24",
+    pricePerGallon: 2.56,
+    amountDue: 327.12,
+  },
+  {
+    id: 3,
+    gallonsRequested: 6,
+    deliveryAddress: "125 mcdonalds street",
+    deliveryDate: "9-13-24",
+    pricePerGallon: 2.56,
+    amountDue: 327.12,
+  },
+  {
+    id: 4,
+    gallonsRequested: 8,
+    deliveryAddress: "126 mcdonalds street",
+    deliveryDate: "9-14-24",
+    pricePerGallon: "2.56",
+    amountDue: "327.12",
+  },
+  {
+    id: 5,
+    gallonsRequested: 10,
+    deliveryAddress: "131 mcdonalds street",
+    deliveryDate: "9-15-24",
+    pricePerGallon: 2.56,
+    amountDue: 327.12,
+  },
+  {
+    id: 6,
+    gallonsRequested: 12,
+    deliveryAddress: "122 mcdonalds street",
+    deliveryDate: "9-16-24",
+    pricePerGallon: 2.56,
+    amountDue: 327.12,
+  },
+  {
+    id: 7,
+    gallonsRequested: 24,
+    deliveryAddress: "121 mcdonalds street",
+    deliveryDate: "9-17-24",
+    pricePerGallon: 2.56,
+    amountDue: 327.12,
+  },
+  {
+    id: 8,
+    gallonsRequested: 20,
+    deliveryAddress: "120 mcdonalds street",
+    deliveryDate: "9-18-24",
+    pricePerGallon: 2.56,
+    amountDue: 327.12,
+  },
+];
+
+if(localStorage.getItem("quotes")){
+  //do nothing
+}
+else{
+  localStorage.setItem("quotes", JSON.stringify(rows))
+}
+
 //Change BG color
 document.body.style.backgroundColor = '#D3D3D3';
 
@@ -57,6 +133,11 @@ function Dashboard({ user }) {
     setValue(newValue);
   };
 
+  //put into state
+  const [latestQuotes, setLatestQuotes] = useState(function(){
+    return JSON.parse(localStorage.getItem("quotes"))
+  })
+
   return (
     <div> <br/><br/>
       <Typography variant="h3" align="center" color="primary">Welcome to the Dashboard</Typography> <br/>
@@ -78,14 +159,10 @@ function Dashboard({ user }) {
               </Paper>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <Grid item xs={12} md={4}>
-                <FuelQuoteForm />
-              </Grid>
+                <FuelQuoteForm onSubmitQuote={setLatestQuotes}/>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              <Grid item xs={12} md={8}>
-                <FuelQuoteHistoryTable />
-              </Grid>
+                <FuelQuoteHistoryTable latestQuotes = {latestQuotes}/>
             </CustomTabPanel>
           </Box>
           
