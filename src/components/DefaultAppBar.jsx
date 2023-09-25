@@ -1,5 +1,3 @@
-// 56 - 64 change the code to the products page 
-
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,7 +8,8 @@ import OilBarrelIcon from '@mui/icons-material/OilBarrel';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-const pages = ['Products', 'Pricing', 'Blog'];
+import CircularProgress from '@mui/material/CircularProgress';
+const pages = ['Products', 'Pricing', 'Blog', 'Demo'];
 
 
 export default function DefaultAppBar(props) {
@@ -60,42 +59,46 @@ export default function DefaultAppBar(props) {
             {pages.map((page) => (
               <Button
                 key={page}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block', '&:hover': {backgroundColor: '#22c55e',}, }} 
               >
-                <a href={`/${page}`} style={{textDecoration: 'none'}}>{page}</a>
+                <a href={`/${page.toLowerCase()}`} style={{ textDecoration: 'none', color: 'white', }}>{page.toLowerCase()}</a>
               </Button>
             ))}
           </Box>
 
-          <Box sx={{
-            flexGrow: 0,
-          }}>
-            <Button
-              variant="outlined"
-              color="inherit"
-              onClick={props.onLogin}
-              sx={{
-                '&:hover': {
-                  backgroundColor: 'rgba(0, 191, 255, 0.3)',
-                },
-              }}
-            >
-              Login
-            </Button>
-            <Button
-              variant="outlined"
-              color="inherit"
-              onClick={props.onRegistration}
-              sx={{
-                ml: 2,
-                '&:hover': {
-                  backgroundColor: 'rgba(0, 191, 255, 0.3)',
-                },
-              }}
-            >
-              Register
-            </Button>
-          </Box>
+          {props.isLoggedInNull == true ? (
+            <CircularProgress />
+          ):(
+            <Box sx={{
+              flexGrow: 0,
+            }}>
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={props.onLogin}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 191, 255, 0.3)',
+                  },
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={props.onRegistration}
+                sx={{
+                  ml: 2,
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 191, 255, 0.3)',
+                  },
+                }}
+              >
+                Register
+              </Button>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

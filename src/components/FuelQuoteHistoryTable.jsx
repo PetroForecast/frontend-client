@@ -19,75 +19,8 @@ const columns = [
   { field: "amountDue", headerName: "Total Amount Due", width: 200 },
 ];
 
-const rows = [
-  // data for table
-  {
-    id: 1,
-    gallonsRequested: "2",
-    deliveryAddress: "123 mcdonalds street",
-    deliveryDate: "9-11-24",
-    pricePerGallon: "2.56",
-    amountDue: "327.12",
-  },
-  {
-    id: 2,
-    gallonsRequested: "4",
-    deliveryAddress: "124 mcdonalds street",
-    deliveryDate: "9-12-24",
-    pricePerGallon: "2.56",
-    amountDue: "327.12",
-  },
-  {
-    id: 3,
-    gallonsRequested: "6",
-    deliveryAddress: "125 mcdonalds street",
-    deliveryDate: "9-13-24",
-    pricePerGallon: "2.56",
-    amountDue: "327.12",
-  },
-  {
-    id: 4,
-    gallonsRequested: "8",
-    deliveryAddress: "126 mcdonalds street",
-    deliveryDate: "9-14-24",
-    pricePerGallon: "2.56",
-    amountDue: "327.12",
-  },
-  {
-    id: 5,
-    gallonsRequested: "10",
-    deliveryAddress: "131 mcdonalds street",
-    deliveryDate: "9-15-24",
-    pricePerGallon: "2.56",
-    amountDue: "327.12",
-  },
-  {
-    id: 6,
-    gallonsRequested: "12",
-    deliveryAddress: "122 mcdonalds street",
-    deliveryDate: "9-16-24",
-    pricePerGallon: "2.56",
-    amountDue: "327.12",
-  },
-  {
-    id: 7,
-    gallonsRequested: "24",
-    deliveryAddress: "121 mcdonalds street",
-    deliveryDate: "9-17-24",
-    pricePerGallon: "2.56",
-    amountDue: "327.12",
-  },
-  {
-    id: 8,
-    gallonsRequested: "20",
-    deliveryAddress: "120 mcdonalds street",
-    deliveryDate: "9-18-24",
-    pricePerGallon: "2.56",
-    amountDue: "327.12",
-  },
-];
 
-export default function FuelQuoteHistoryTable() {
+export default function FuelQuoteHistoryTable({latestQuotes}) {
   return (
     <Paper elevation={4} sx={{ p: 2 }}>
       <Box style={{ height: "auto", overflow: "auto" }}>
@@ -95,7 +28,7 @@ export default function FuelQuoteHistoryTable() {
           Fuel Quote History
         </Typography>
         <DataGrid
-          rows={rows}
+          rows={latestQuotes}
           columns={columns}
           initialState={{
             //sets the defualt look of table
