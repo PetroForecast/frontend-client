@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import OilBarrelIcon from '@mui/icons-material/OilBarrel';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const pages = ['Products', 'Pricing', 'Blog', 'Demo'];
 
@@ -79,7 +80,7 @@ export default function DefaultAppBar(props) {
           </Box>
           {props.isLoggedInNull == true ? (
             <CircularProgress />
-          ):(
+          ) : (
             <Box sx={{
               flexGrow: 0,
             }}>
