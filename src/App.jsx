@@ -17,15 +17,25 @@ import BlogPage from './pages/BlogPage';
 import DemoPage from './pages/DemoPage'; 
 import { dummyUsers } from './data/users';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
+import { v4 as uuidv4 } from 'uuid';
 
-export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+//add dummy users to local storage-->
+if(localStorage.getItem("users"))
+{//do nothing
+}
+else{
+  localStorage.setItem('users', JSON.stringify(dummyUsers));
+}
+
+export default function App() { 
+  const [isLoggedIn, setIsLoggedIn] = useState(null); // made isloggedin null, on render, it would render defualt with loader
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   // Add profile completion state (FIXME: backend implementation)
   const [isProfileComplete, setProfileComplete] = useState(null);
   const navigate = useNavigate();
+   const currentUsers = JSON.parse(localStorage.getItem('users'))
 
   //TESTING
   // Load user data from localStorage on initial load
@@ -41,6 +51,9 @@ export default function App() {
       setProfileComplete(storedProfileCompleted === "true");
       // setProfileComplete(userHasCompletedProfile);
     }
+    else{
+      setIsLoggedIn(false);
+    }
   }, []);
 
   // Open the registration modal
@@ -55,17 +68,28 @@ export default function App() {
 
   //FIXME (with real registration logic)
   const handleRegistration = (username, password) => {
-    const userExists = dummyUsers.find((u) => u.username === username);
+    const userExists = currentUsers.find((u) => u.username === username);
 
     if (userExists) {
       // FIXME
       // Handle registration failure
       alert("Failed to register");
       console.log("Failed to register");
+
     } else {
       // FIXME
       // Insert data into database
       // After client registers they should login first to complete the profile
+
+      //TEMPORARY SOLUTION
+      //retrieve latest data from local storage, then set items again
+      //then overwrite users in local storage
+      const newUser = {id: uuidv4(), role: "client", username: username, password: password, email: null, profile: null}
+
+      const newUsers = [...currentUsers, newUser]
+      localStorage.setItem('users', JSON.stringify(newUsers));
+
+
       alert("Successfully registered user");
       console.log("Successfully registered user");
       navigate("/");
@@ -86,7 +110,7 @@ export default function App() {
   // Login handler
   const handleLogin = (username, password) => {
     // Simulate authentication by checking against dummy user data
-    const user = dummyUsers.find(
+    const user = currentUsers.find(
       (u) => u.username === username && u.password === password
     );
 
@@ -100,6 +124,7 @@ export default function App() {
       //console.log(localStorage.getItem('currentUser'))
 
       setProfileComplete(false);
+      localStorage.setItem("profileCompleted", "false")
 
       if (!isProfileComplete) {
         navigate("/profile-completion");
@@ -111,6 +136,7 @@ export default function App() {
 
     } else {
       // Handle login failure (e.g., show an error message)
+      alert("Failed to login")
       console.log("Failed to login");
     }
   };
@@ -121,6 +147,7 @@ export default function App() {
     console.log("Logout clicked");
     // Clear user data from localStorage
     localStorage.removeItem("currentUser");
+    localStorage.setItem("profileCompleted", "false")
     setIsLoggedIn(false);
     setCurrentUser(null);
     navigate("/");
@@ -152,17 +179,26 @@ export default function App() {
     document.body.style.backgroundColor = '#bae6fd',
     <div>
 
-      {isLoggedIn ? (
-        <UserAppBar
-          onProfileClick={handleProfileClick}
-          onDashboardClick={handleDashboardClick}
-          onLogout={handleLogout}
-        />
-      ) : (
+      {isLoggedIn == null ? (
         <DefaultAppBar
+          isLoggedInNull={true}
           onLogin={openLoginModal}
           onRegistration={openRegistrationModal}
         />
+      ) : (
+        isLoggedIn == true ? (
+          <UserAppBar
+            onProfileClick={handleProfileClick}
+            onDashboardClick={handleDashboardClick}
+            onLogout={handleLogout}
+          />
+        ) : (
+          <DefaultAppBar
+            isLoggedInNull={false}
+            onLogin={openLoginModal}
+            onRegistration={openRegistrationModal}
+          />
+        )
       )}
 
       <LoginModal
