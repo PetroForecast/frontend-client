@@ -176,7 +176,7 @@ export default function App() {
 
   return (
     // Body background color 
-    document.body.style.backgroundColor = 'rgba(205,226,184,255)',
+    document.body.style.backgroundColor = '#bae6fd',
     <div>
 
       {isLoggedIn == null ? (

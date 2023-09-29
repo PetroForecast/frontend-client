@@ -3,16 +3,19 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
 import OilBarrelIcon from '@mui/icons-material/OilBarrel';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import CircularProgress from '@mui/material/CircularProgress';
+
 const pages = ['Products', 'Pricing', 'Blog', 'Demo'];
 
-
 export default function DefaultAppBar(props) {
+  const [activeLink, setActiveLink] = React.useState(''); // State to track the active link
+
+  const handleLinkClick = (page) => {
+    console.log('Clicked:', page.toLowerCase());
+    setActiveLink(page.toLowerCase()); // Set the active link state
+  };
 
   return (
     <AppBar position="static">
@@ -59,13 +62,21 @@ export default function DefaultAppBar(props) {
             {pages.map((page) => (
               <Button
                 key={page}
-                sx={{ my: 2, color: 'white', display: 'block', '&:hover': {backgroundColor: '#22c55e',}, }} 
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                  '&:hover': { backgroundColor: '#22c55e' },
+                  backgroundColor: activeLink === page.toLowerCase() ? 'orange' : 'inherit', // Set the background color based on activeLink state
+                }}
+                onClick={() => handleLinkClick(page)}
               >
-                <a href={`/${page.toLowerCase()}`} style={{ textDecoration: 'none', color: 'white', }}>{page.toLowerCase()}</a>
+                <a href={`/${page.toLowerCase()}`} style={{ textDecoration: 'none', color: 'white' }}>
+                  {page.toLowerCase()}
+                </a>
               </Button>
             ))}
           </Box>
-
           {props.isLoggedInNull == true ? (
             <CircularProgress />
           ):(
