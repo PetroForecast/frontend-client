@@ -12,22 +12,22 @@ import Dashboard from './containers/Dashboard';
 import LoginModal from './components/LoginModal';
 import RegistrationModal from './components/RegistrationModal';
 import ProductsPage from './pages/ProductsPage';
-import PricingPage from './pages/PricingPage'; 
-import BlogPage from './pages/BlogPage'; 
-import DemoPage from './pages/DemoPage'; 
+import PricingPage from './pages/PricingPage';
+import BlogPage from './pages/BlogPage';
+import DemoPage from './pages/DemoPage';
 import { dummyUsers } from './data/users';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 //add dummy users to local storage-->
-if(localStorage.getItem("users"))
-{//do nothing
+if (localStorage.getItem("users")) {//do nothing
 }
-else{
+else {
   localStorage.setItem('users', JSON.stringify(dummyUsers));
 }
 
-export default function App() { 
+export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null); // made isloggedin null, on render, it would render defualt with loader
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
@@ -35,7 +35,7 @@ export default function App() {
   // Add profile completion state (FIXME: backend implementation)
   const [isProfileComplete, setProfileComplete] = useState(null);
   const navigate = useNavigate();
-   const currentUsers = JSON.parse(localStorage.getItem('users'))
+  const currentUsers = JSON.parse(localStorage.getItem('users'))
 
   //TESTING
   // Load user data from localStorage on initial load
@@ -51,7 +51,7 @@ export default function App() {
       setProfileComplete(storedProfileCompleted === "true");
       // setProfileComplete(userHasCompletedProfile);
     }
-    else{
+    else {
       setIsLoggedIn(false);
     }
   }, []);
@@ -84,7 +84,7 @@ export default function App() {
       //TEMPORARY SOLUTION
       //retrieve latest data from local storage, then set items again
       //then overwrite users in local storage
-      const newUser = {id: uuidv4(), role: "client", username: username, password: password, email: null, profile: null}
+      const newUser = { id: uuidv4(), role: "client", username: username, password: password, email: null, profile: null }
 
       const newUsers = [...currentUsers, newUser]
       localStorage.setItem('users', JSON.stringify(newUsers));
@@ -108,11 +108,20 @@ export default function App() {
 
   //FIXME (with real auth logic)
   // Login handler
-  const handleLogin = (username, password) => {
+  const handleLogin = async (username, password) => {
     // Simulate authentication by checking against dummy user data
     const user = currentUsers.find(
       (u) => u.username === username && u.password === password
     );
+    try {
+      //TODO update local storage / user profile with the response data
+      const response = await axios.post('https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/login', { username, password });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
+
+
 
     if (user) {
       // If authentication succeeds, set the user as the current user
@@ -186,7 +195,7 @@ export default function App() {
           onRegistration={openRegistrationModal}
         />
       ) : (
-        isLoggedIn == true ? (
+        isLoggedIn === true ? (
           <UserAppBar
             onProfileClick={handleProfileClick}
             onDashboardClick={handleDashboardClick}
