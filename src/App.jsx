@@ -110,44 +110,46 @@ export default function App() {
   // Login handler
   const handleLogin = async (username, password) => {
     // Simulate authentication by checking against dummy user data
-    const user = currentUsers.find(
-      (u) => u.username === username && u.password === password
-    );
+    // const user = currentUsers.find(
+    //   (u) => u.username === username && u.password === password
+    // );
+    //console.log(user);
     try {
       //TODO update local storage / user profile with the response data
-      const response = await axios.post('https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/login', { username, password });
+      const response = await axios.post('https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/login',
+        { username, password });
       console.log(response.data);
+      if (response.data) {
+        // If authentication succeeds, set the user as the current user
+        setIsLoggedIn(true);
+        setCurrentUser(response.data);
+
+        // Save user data in localStorage
+        localStorage.setItem("currentUser", JSON.stringify(response.data));
+        //console.log(localStorage.getItem('currentUser'))
+
+        console.log((JSON.parse((localStorage.getItem("currentUser"))).isComplete));
+        let profileComplete = JSON.parse((localStorage.getItem("currentUser"))).isComplete;
+        if (profileComplete === 'false') {
+          setProfileComplete(false);
+        } else {
+          setProfileComplete(true);
+        }
+
+
+        if (!isProfileComplete) {
+          navigate("/profile-completion");
+        } else {
+          // Redirect to the dashboard if the profile is complete
+          navigate("/dashboard");
+        }
+      }
     } catch (error) {
+      alert("Failed to login")
       console.error('Login failed:', error);
     }
 
 
-
-    if (user) {
-      // If authentication succeeds, set the user as the current user
-      setIsLoggedIn(true);
-      setCurrentUser(user);
-
-      // Save user data in localStorage
-      localStorage.setItem("currentUser", JSON.stringify(user));
-      //console.log(localStorage.getItem('currentUser'))
-
-      setProfileComplete(false);
-      localStorage.setItem("profileCompleted", "false")
-
-      if (!isProfileComplete) {
-        navigate("/profile-completion");
-      } else {
-        // Redirect to the dashboard if the profile is complete
-        navigate("/dashboard");
-      }
-
-
-    } else {
-      // Handle login failure (e.g., show an error message)
-      alert("Failed to login")
-      console.log("Failed to login");
-    }
   };
 
   // Logout handler (FIXME with real logic)
