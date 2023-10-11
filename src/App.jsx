@@ -39,22 +39,22 @@ export default function App() {
 
   //TESTING
   // Load user data from localStorage on initial load
-  useEffect(() => {
+  // useEffect(() => {
 
-    //FIXME: add real logic to check database if the profile was complete here
+  //   //FIXME: add real logic to check database if the profile was complete here
 
-    const storedUser = localStorage.getItem("currentUser");
-    const storedProfileCompleted = localStorage.getItem("profileCompleted");
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
-      setIsLoggedIn(true);
-      setProfileComplete(storedProfileCompleted === "true");
-      // setProfileComplete(userHasCompletedProfile);
-    }
-    else {
-      setIsLoggedIn(false);
-    }
-  }, []);
+  //   const storedUser = localStorage.getItem("currentUser");
+  //   const storedProfileCompleted = localStorage.getItem("profileCompleted");
+  //   if (storedUser) {
+  //     setCurrentUser(JSON.parse(storedUser));
+  //     setIsLoggedIn(true);
+  //     setProfileComplete(storedProfileCompleted === "true");
+  //     // setProfileComplete(userHasCompletedProfile);
+  //   }
+  //   else {
+  //     setIsLoggedIn(false);
+  //   }
+  // }, []);
 
   // Open the registration modal
   const openRegistrationModal = () => {
@@ -190,7 +190,7 @@ export default function App() {
 
       {isLoggedIn == null ? (
         <DefaultAppBar
-          isLoggedInNull={true}
+          isLoggedInNull={false}
           onLogin={openLoginModal}
           onRegistration={openRegistrationModal}
         />
