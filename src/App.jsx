@@ -15,17 +15,17 @@ import ProductsPage from './pages/ProductsPage';
 import PricingPage from './pages/PricingPage';
 import BlogPage from './pages/BlogPage';
 import DemoPage from './pages/DemoPage';
-import { dummyUsers } from './data/users';
+//import { dummyUsers } from './data/users';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 //add dummy users to local storage-->
-if (localStorage.getItem("users")) {//do nothing
-}
-else {
-  localStorage.setItem('users', JSON.stringify(dummyUsers));
-}
+// if (localStorage.getItem("users")) {//do nothing
+// }
+// else {
+//   localStorage.setItem('users', JSON.stringify(dummyUsers));
+// }
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null); // made isloggedin null, on render, it would render defualt with loader
@@ -35,54 +35,41 @@ export default function App() {
   // Add profile completion state (FIXME: backend implementation)
   const [isProfileComplete, setProfileComplete] = useState(null);
   const navigate = useNavigate();
-  const currentUsers = JSON.parse(localStorage.getItem('users'))
 
-  // Open the registration modal
   const openRegistrationModal = () => {
     setRegistrationModalOpen(true);
   };
 
-  // Close the registration modal
   const closeRegistrationModal = () => {
     setRegistrationModalOpen(false);
   };
 
-  //FIXME (with real registration logic)
-  const handleRegistration = (username, password) => {
-    const userExists = currentUsers.find((u) => u.username === username);
+  const handleRegistration = async (username, password) => {
+    try {
+      const response = await axios.get(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/check/${username}`)
+      //console.log(response);
+      if (response.status === 200 && response.data.available) {
+        alert("Successfully registered user, Please login to continue");
+        console.log("Successfully registered user");
+        const registrationResponse = await axios.post('https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/register', {
+          username: username,
+          password: password,
+        });
+        console.log('User registered:', registrationResponse);
 
-    if (userExists) {
-      // FIXME
-      // Handle registration failure
-      alert("Failed to register");
-      console.log("Failed to register");
+        navigate("/");
+      }
 
-    } else {
-      // FIXME
-      // Insert data into database
-      // After client registers they should login first to complete the profile
-
-      //TEMPORARY SOLUTION
-      //retrieve latest data from local storage, then set items again
-      //then overwrite users in local storage
-      const newUser = { id: uuidv4(), role: "client", username: username, password: password, email: null, profile: null }
-
-      const newUsers = [...currentUsers, newUser]
-      localStorage.setItem('users', JSON.stringify(newUsers));
-
-
-      alert("Successfully registered user");
-      console.log("Successfully registered user");
-      navigate("/");
+    } catch (error) {
+      alert("Failed to register, username is already taken.")
+      console.error('Registration failed:', error);
     }
   };
 
-  // Open the login modal
   const openLoginModal = () => {
     setLoginModalOpen(true);
   };
 
-  // Close the login modal
   const closeLoginModal = () => {
     setLoginModalOpen(false);
   };
@@ -116,7 +103,6 @@ export default function App() {
     }
   };
 
-  // Logout handler
   const handleLogout = () => {
     console.log("Logout clicked");
     localStorage.removeItem("currentUser");
@@ -125,13 +111,11 @@ export default function App() {
     navigate("/");
   };
 
-  // Profile click handler
   const handleProfileClick = () => {
     console.log("Profile clicked");
     navigate("/profile");
   };
 
-  // Dashboard click handler
   const handleDashboardClick = () => {
     console.log("Dashboard clicked");
     navigate("/dashboard");
@@ -144,12 +128,10 @@ export default function App() {
 
   const handleUpdateProfile = (updatedUser) => {
     console.log("Profile update action", updatedUser);
-
     setCurrentUser(updatedUser);
   };
 
   return (
-    // Body background color 
     document.body.style.backgroundColor = '#bae6fd',
     <div>
 
