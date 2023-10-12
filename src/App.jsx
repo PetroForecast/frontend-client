@@ -106,41 +106,26 @@ export default function App() {
     setLoginModalOpen(false);
   };
 
-  //FIXME (with real auth logic)
   // Login handler
   const handleLogin = async (username, password) => {
-    // Simulate authentication by checking against dummy user data
-    // const user = currentUsers.find(
-    //   (u) => u.username === username && u.password === password
-    // );
-    //console.log(user);
     try {
-      //TODO update local storage / user profile with the response data
       const response = await axios.post('https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/login',
         { username, password });
       console.log(response.data);
       if (response.data) {
-        // If authentication succeeds, set the user as the current user
         setIsLoggedIn(true);
         setCurrentUser(response.data);
-
-        // Save user data in localStorage
         localStorage.setItem("currentUser", JSON.stringify(response.data));
-        //console.log(localStorage.getItem('currentUser'))
-
-        console.log((JSON.parse((localStorage.getItem("currentUser"))).isComplete));
+        //console.log((JSON.parse((localStorage.getItem("currentUser"))).isComplete));
         let profileComplete = JSON.parse((localStorage.getItem("currentUser"))).isComplete;
         if (profileComplete === 'false') {
           setProfileComplete(false);
         } else {
           setProfileComplete(true);
         }
-
-
         if (!isProfileComplete) {
           navigate("/profile-completion");
         } else {
-          // Redirect to the dashboard if the profile is complete
           navigate("/dashboard");
         }
       }
@@ -148,17 +133,12 @@ export default function App() {
       alert("Failed to login")
       console.error('Login failed:', error);
     }
-
-
   };
 
-  // Logout handler (FIXME with real logic)
+  // Logout handler
   const handleLogout = () => {
-    // Clear the authentication token and set isLoggedIn to false.
     console.log("Logout clicked");
-    // Clear user data from localStorage
     localStorage.removeItem("currentUser");
-    localStorage.setItem("profileCompleted", "false")
     setIsLoggedIn(false);
     setCurrentUser(null);
     navigate("/");
@@ -166,16 +146,12 @@ export default function App() {
 
   // Profile click handler
   const handleProfileClick = () => {
-    // Handle the Profile click event here
-    // Navigate to the Profile page
     console.log("Profile clicked");
     navigate("/profile");
   };
 
   // Dashboard click handler
   const handleDashboardClick = () => {
-    // Handle the Dashboard click event here
-    // Navigate to the Dashboard page
     console.log("Dashboard clicked");
     navigate("/dashboard");
   };
