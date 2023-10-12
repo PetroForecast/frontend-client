@@ -1,10 +1,27 @@
-import React from 'react';
-import { Container, Typography, Paper, Grid, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Container, Typography, Paper, Grid, Button, TextField } from '@mui/material';
 
-function UserProfile() {
-  const storedUser = localStorage.getItem('currentUser');
-  const user = storedUser ? JSON.parse(storedUser) : null;
-  console.log(user);
+function UserProfile({ user, onUpdateProfile }) {
+  const [isEditing, setEditing] = useState(false);
+  const [editedUser, setEditedUser] = useState({ ...user });
+
+  const toggleEdit = () => {
+    setEditing(!isEditing);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedUser({
+      ...editedUser,
+      [name]: value,
+    });
+  };
+
+  const handleUpdate = () => {
+    // Call the onUpdateProfile function to handle the update
+    onUpdateProfile(editedUser);
+    setEditing(false);
+  };
 
   const borderStyle = {
     border: '1px solid',
@@ -16,11 +33,80 @@ function UserProfile() {
       <Paper elevation={3} sx={{ p: 4, mt: 2 }}>
         <Typography variant="h4" gutterBottom>
           User Profile
-          <Button variant="contained" color="primary" style={{ marginLeft: '10px', marginBottom: '5px' }}>
-            Update Profile
+          <Button
+            onClick={toggleEdit}
+            variant="contained"
+            color="primary"
+            style={{ marginLeft: '10px', marginBottom: '5px' }}
+          >
+            {isEditing ? 'Cancel' : 'Edit Profile'}
           </Button>
+          {isEditing && (
+            <Button variant="contained" color="primary" onClick={handleUpdate} style={{ marginLeft: '10px', marginBottom: '5px' }}>
+              Save Changes
+            </Button>
+          )}
         </Typography>
-        {user ? (
+        {isEditing ? (
+          <form>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  name="fullName"
+                  label="Full Name"
+                  value={editedUser.fullName}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  name="address1"
+                  label="Address 1"
+                  value={editedUser.address1}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  name="address2"
+                  label="Address 2"
+                  value={editedUser.address2}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  name="city"
+                  label="City"
+                  value={editedUser.city}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  name="state"
+                  label="State"
+                  value={editedUser.state}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  name="zipcode"
+                  label="Zipcode"
+                  value={editedUser.zipcode}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+          </form>
+        ) : (
           <div>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -38,7 +124,9 @@ function UserProfile() {
               <Grid item xs={6}>
                 <Paper elevation={0} style={borderStyle}>
                   <Typography variant="h6">Address 2:</Typography>
-                  <Typography variant="body1">{user.address2 = user.address2 ? user.address2 : 'N/A'}</Typography>
+                  <Typography variant="body1">
+                    {user.address2 ? user.address2 : 'N/A'}
+                  </Typography>
                 </Paper>
               </Grid>
               <Grid item xs={6}>
@@ -61,10 +149,6 @@ function UserProfile() {
               </Grid>
             </Grid>
           </div>
-        ) : (
-          <Typography variant="body1">
-            No user data available.
-          </Typography>
         )}
       </Paper>
     </Container>

@@ -37,25 +37,6 @@ export default function App() {
   const navigate = useNavigate();
   const currentUsers = JSON.parse(localStorage.getItem('users'))
 
-  //TESTING
-  // Load user data from localStorage on initial load
-  // useEffect(() => {
-
-  //   //FIXME: add real logic to check database if the profile was complete here
-
-  //   const storedUser = localStorage.getItem("currentUser");
-  //   const storedProfileCompleted = localStorage.getItem("profileCompleted");
-  //   if (storedUser) {
-  //     setCurrentUser(JSON.parse(storedUser));
-  //     setIsLoggedIn(true);
-  //     setProfileComplete(storedProfileCompleted === "true");
-  //     // setProfileComplete(userHasCompletedProfile);
-  //   }
-  //   else {
-  //     setIsLoggedIn(false);
-  //   }
-  // }, []);
-
   // Open the registration modal
   const openRegistrationModal = () => {
     setRegistrationModalOpen(true);
@@ -161,6 +142,12 @@ export default function App() {
     localStorage.setItem("profileCompleted", profileComplete ? "true" : "false");
   };
 
+  const handleUpdateProfile = (updatedUser) => {
+    console.log("Profile update action", updatedUser);
+
+    setCurrentUser(updatedUser);
+  };
+
   return (
     // Body background color 
     document.body.style.backgroundColor = '#bae6fd',
@@ -206,7 +193,7 @@ export default function App() {
           path="/profile"
           element={
             isLoggedIn ? (
-              <UserProfile user={currentUser} />
+              <UserProfile user={currentUser} onUpdateProfile={handleUpdateProfile} />
             ) : (
               <Navigate to="/" />
             )
