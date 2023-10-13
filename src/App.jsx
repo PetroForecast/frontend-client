@@ -74,7 +74,6 @@ export default function App() {
     setLoginModalOpen(false);
   };
 
-  // Login handler
   const handleLogin = async (username, password) => {
     try {
       const response = await axios.post('https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/login',
@@ -126,9 +125,16 @@ export default function App() {
     localStorage.setItem("profileCompleted", profileComplete ? "true" : "false");
   };
 
-  const handleUpdateProfile = (updatedUser) => {
-    console.log("Profile update action", updatedUser);
-    setCurrentUser(updatedUser);
+  const handleUpdateProfile = async (updatedUser) => {
+    try {
+      const response = await axios.put(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/update/${updatedUser.username}`, updatedUser)
+      console.log("Profile update action on:", response.data);
+      setCurrentUser(response.data);
+      localStorage.setItem("currentUser", JSON.stringify(response.data));
+    } catch (error) {
+      alert("Failed to Update User")
+      console.error('Update User Failed:', error);
+    }
   };
 
   return (
