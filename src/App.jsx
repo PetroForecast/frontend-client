@@ -12,22 +12,34 @@ import Dashboard from './containers/Dashboard';
 import LoginModal from './components/LoginModal';
 import RegistrationModal from './components/RegistrationModal';
 import ProductsPage from './pages/ProductsPage';
-import PricingPage from './pages/PricingPage'; 
-import BlogPage from './pages/BlogPage'; 
-import DemoPage from './pages/DemoPage'; 
-import { dummyUsers } from './data/users';
+import PricingPage from './pages/PricingPage';
+import BlogPage from './pages/BlogPage';
+import DemoPage from './pages/DemoPage';
+//import { dummyUsers } from './data/users';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
-import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import './scrollbar/custom-scrollbar-ui.css';
+
+// Import the DescriptionAlerts component from Alert.jsx
+import DescriptionAlerts from './Alerts/alert';
+
+
 
 //add dummy users to local storage-->
-if(localStorage.getItem("users"))
-{//do nothing
-}
-else{
-  localStorage.setItem('users', JSON.stringify(dummyUsers));
-}
+// if (localStorage.getItem("users")) {//do nothing
+// }
+// else {
+//   localStorage.setItem('users', JSON.stringify(dummyUsers));
+// }
 
-export default function App() { 
+export default function App() {
+  const [registrationAlert, setRegistrationAlert] = useState({
+    open: false,
+    severity: 'success', // Set the severity based on the message type
+    message: '',
+  });
+
+
   const [isLoggedIn, setIsLoggedIn] = useState(null); // made isloggedin null, on render, it would render defualt with loader
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
@@ -35,136 +47,108 @@ export default function App() {
   // Add profile completion state (FIXME: backend implementation)
   const [isProfileComplete, setProfileComplete] = useState(null);
   const navigate = useNavigate();
-   const currentUsers = JSON.parse(localStorage.getItem('users'))
 
-  //TESTING
-  // Load user data from localStorage on initial load
-  useEffect(() => {
-
-    //FIXME: add real logic to check database if the profile was complete here
-
-    const storedUser = localStorage.getItem("currentUser");
-    const storedProfileCompleted = localStorage.getItem("profileCompleted");
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
-      setIsLoggedIn(true);
-      setProfileComplete(storedProfileCompleted === "true");
-      // setProfileComplete(userHasCompletedProfile);
-    }
-    else{
-      setIsLoggedIn(false);
-    }
-  }, []);
-
-  // Open the registration modal
   const openRegistrationModal = () => {
     setRegistrationModalOpen(true);
   };
 
-  // Close the registration modal
   const closeRegistrationModal = () => {
     setRegistrationModalOpen(false);
   };
 
-  //FIXME (with real registration logic)
-  const handleRegistration = (username, password) => {
-    const userExists = currentUsers.find((u) => u.username === username);
+  const handleRegistration = async (username, password) => {
+    try {
+      const response = await axios.get(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/check/${username}`)
+      //console.log(response);
+      if (response.status === 200 && response.data.available) {
+        setRegistrationAlert({
+          open: true,
+          severity: 'success',
+          message: 'Successfully registered user, Please login to continue',
+        });
+        // alert("Successfully registered user, Please login to continue");
+        // console.log("Successfully registered user");
+        const registrationResponse = await axios.post('https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/register', {
+          username: username,
+          password: password,
+        });
+        console.log('User registered:', registrationResponse);
 
-    if (userExists) {
-      // FIXME
-      // Handle registration failure
-      alert("Failed to register");
-      console.log("Failed to register");
+        navigate("/");
+      }
 
-    } else {
-      // FIXME
-      // Insert data into database
-      // After client registers they should login first to complete the profile
+    } catch (error) {
 
-      //TEMPORARY SOLUTION
-      //retrieve latest data from local storage, then set items again
-      //then overwrite users in local storage
-      const newUser = {id: uuidv4(), role: "client", username: username, password: password, email: null, profile: null}
+      setRegistrationAlert({
+        open: true,
+        severity: 'error',
+        message: 'Failed to register, username is already taken.',
+      });
 
-      const newUsers = [...currentUsers, newUser]
-      localStorage.setItem('users', JSON.stringify(newUsers));
-
-
-      alert("Successfully registered user");
-      console.log("Successfully registered user");
-      navigate("/");
+      console.error('Registration failed:', error);
+      // alert("Failed to register, username is already taken.")
+      // console.error('Registration failed:', error);
     }
   };
 
-  // Open the login modal
   const openLoginModal = () => {
     setLoginModalOpen(true);
   };
 
-  // Close the login modal
   const closeLoginModal = () => {
     setLoginModalOpen(false);
   };
 
-  //FIXME (with real auth logic)
-  // Login handler
-  const handleLogin = (username, password) => {
-    // Simulate authentication by checking against dummy user data
-    const user = currentUsers.find(
-      (u) => u.username === username && u.password === password
-    );
-
-    if (user) {
-      // If authentication succeeds, set the user as the current user
-      setIsLoggedIn(true);
-      setCurrentUser(user);
-
-      // Save user data in localStorage
-      localStorage.setItem("currentUser", JSON.stringify(user));
-      //console.log(localStorage.getItem('currentUser'))
-
-      setProfileComplete(false);
-      localStorage.setItem("profileCompleted", "false")
-
-      if (!isProfileComplete) {
-        navigate("/profile-completion");
-      } else {
-        // Redirect to the dashboard if the profile is complete
-        navigate("/dashboard");
+  const handleLogin = async (username, password) => {
+    try {
+      const response = await axios.post('https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/login',
+        { username, password });
+      console.log(response.data);
+      if (response.data) {
+        setIsLoggedIn(true);
+        setCurrentUser(response.data);
+        localStorage.setItem("currentUser", JSON.stringify(response.data));
+        //console.log((JSON.parse((localStorage.getItem("currentUser"))).isComplete));
+        let profileComplete = JSON.parse((localStorage.getItem("currentUser"))).isComplete;
+        if (profileComplete === 'false') {
+          setProfileComplete(false);
+        } else {
+          setProfileComplete(true);
+        }
+        if (!isProfileComplete) {
+          navigate("/profile-completion");
+        } else {
+          navigate("/dashboard");
+        }
       }
+    } catch (error) {
+      setRegistrationAlert({
+        open: true,
+        severity: 'error',
+        message: 'Failed to login. Username or password incorrect!',
+      });
 
+      console.error('Login failed:', error);
 
-    } else {
-      // Handle login failure (e.g., show an error message)
-      alert("Failed to login")
-      console.log("Failed to login");
+      // alert("Failed to login")
+      // console.error('Login failed:', error);
     }
   };
 
-  // Logout handler (FIXME with real logic)
   const handleLogout = () => {
-    // Clear the authentication token and set isLoggedIn to false.
     console.log("Logout clicked");
-    // Clear user data from localStorage
     localStorage.removeItem("currentUser");
-    localStorage.setItem("profileCompleted", "false")
     setIsLoggedIn(false);
     setCurrentUser(null);
     navigate("/");
   };
 
-  // Profile click handler
   const handleProfileClick = () => {
-    // Handle the Profile click event here
-    // Navigate to the Profile page
     console.log("Profile clicked");
     navigate("/profile");
   };
 
-  // Dashboard click handler
   const handleDashboardClick = () => {
-    // Handle the Dashboard click event here
-    // Navigate to the Dashboard page
     console.log("Dashboard clicked");
     navigate("/dashboard");
   };
@@ -174,19 +158,30 @@ export default function App() {
     localStorage.setItem("profileCompleted", profileComplete ? "true" : "false");
   };
 
+  const handleUpdateProfile = async (updatedUser) => {
+    try {
+      const response = await axios.put(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/update/${updatedUser.username}`, updatedUser)
+      console.log("Profile update action on:", response.data);
+      setCurrentUser(response.data);
+      localStorage.setItem("currentUser", JSON.stringify(response.data));
+    } catch (error) {
+      alert("Failed to Update User")
+      console.error('Update User Failed:', error);
+    }
+  };
+
   return (
-    // Body background color 
-    document.body.style.backgroundColor = 'rgba(205,226,184,255)',
+    document.body.style.backgroundColor = '#bae6fd',
     <div>
 
       {isLoggedIn == null ? (
         <DefaultAppBar
-          isLoggedInNull={true}
+          isLoggedInNull={false}
           onLogin={openLoginModal}
           onRegistration={openRegistrationModal}
         />
       ) : (
-        isLoggedIn == true ? (
+        isLoggedIn === true ? (
           <UserAppBar
             onProfileClick={handleProfileClick}
             onDashboardClick={handleDashboardClick}
@@ -213,13 +208,23 @@ export default function App() {
         onRegistration={handleRegistration}
       />
 
+      { // Alert UI 
+      registrationAlert.open && (
+        <DescriptionAlerts
+          severity={registrationAlert.severity}
+          message={registrationAlert.message}
+          closeable={true}
+          onClose={() => setRegistrationAlert({ ...registrationAlert, open: false })}
+        />
+      )}
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
           path="/profile"
           element={
             isLoggedIn ? (
-              <UserProfile user={currentUser} />
+              <UserProfile user={currentUser} onUpdateProfile={handleUpdateProfile} />
             ) : (
               <Navigate to="/" />
             )
@@ -232,7 +237,7 @@ export default function App() {
               isProfileComplete ? ( // Redirect to dashboard if profile is complete
                 <Navigate to="/dashboard" />
               ) : (
-                <ProfileCompletionForm onComplete={handleProfileCompletion} /> // Show profile completion form
+                <ProfileCompletionForm user={currentUser} onComplete={handleProfileCompletion} /> // Show profile completion form
               )
             ) : (
               <Navigate to="/" />
@@ -262,3 +267,5 @@ export default function App() {
     </div>
   );
 }
+
+

@@ -10,8 +10,9 @@ import {
     MenuItem,
     Paper,
 } from "@mui/material";
+import axios from "axios";
 
-function ProfileCompletionForm({ onComplete }) {
+function ProfileCompletionForm({ user, onComplete }) {
     const [formData, setFormData] = useState({
         fullName: "",
         address1: "",
@@ -79,18 +80,16 @@ function ProfileCompletionForm({ onComplete }) {
         setFormData({ ...formData, [name]: value });
     };
 
-    //FIXME with real data validation
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Perform form validation and submission here
-        // If validation is successful, update user profile
-        // Set profileComplete to true in the database
-        // await updateProfile(formData);
-        // onComplete();
-
         try {
-            //await updateProfile(formData);
-            onComplete(true); // Set isProfileComplete=true
+            const requestData = {
+                ...formData,
+                isComplete: "true",
+            };
+            const response = await axios.put(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/update/${user.username}`, requestData);
+            console.log(response);
+            onComplete(true);
         } catch (error) {
             alert("Error updating profile:", error);
             console.error("Error updating profile:", error);

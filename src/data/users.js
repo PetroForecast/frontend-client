@@ -1,26 +1,33 @@
 // Dummy user data
 export const dummyUsers = [
   {
-    id: 1,
-    role: 'admin',
     username: 'user1',
     password: 'pw1',
-    email: 'user1@example.com',
-    profile: {
-      name: 'User One',
-      bio: 'A sample bio for User One',
-    },
+    fullName: 'John Doe',
+    address1: '123 Main Street',
+    address2: 'Apt 456',
+    city: 'Los Angeles',
+    state: 'CA',
+    zipcode: '90001',
   },
   {
-    id: 2,
-    role: 'client',
     username: 'user2',
     password: 'pw2',
-    email: 'user2@example.com',
-    profile: {
-      name: 'User Two',
-      bio: 'A sample bio for User Two',
-    },
+    fullName: 'Alice Smith',
+    address1: '456 Elm Street',
+    address2: '',
+    city: 'New York',
+    state: 'NY',
+    zipcode: '10001',
   },
-  // Add more here
+  {
+    username: 'user3',
+    password: 'pw3',
+    fullName: 'Bob Johnson',
+    address1: '789 Oak Street',
+    address2: 'Suite 101',
+    city: 'Chicago',
+    state: 'IL',
+    zipcode: '60601',
+  },
 ];
