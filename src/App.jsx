@@ -17,10 +17,12 @@ import BlogPage from './pages/BlogPage';
 import DemoPage from './pages/DemoPage';
 //import { dummyUsers } from './data/users';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
-// import DescriptionAlerts from './Alerts/alert'; 
-import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import './scrollbar/custom-scrollbar-ui.css';
+
+// Import the DescriptionAlerts component from Alert.jsx
+import DescriptionAlerts from './Alerts/alert';
+
 
 
 //add dummy users to local storage-->
@@ -31,6 +33,13 @@ import './scrollbar/custom-scrollbar-ui.css';
 // }
 
 export default function App() {
+  const [registrationAlert, setRegistrationAlert] = useState({
+    open: false,
+    severity: 'success', // Set the severity based on the message type
+    message: '',
+  });
+
+
   const [isLoggedIn, setIsLoggedIn] = useState(null); // made isloggedin null, on render, it would render defualt with loader
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
@@ -52,8 +61,13 @@ export default function App() {
       const response = await axios.get(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/check/${username}`)
       //console.log(response);
       if (response.status === 200 && response.data.available) {
-        alert("Successfully registered user, Please login to continue");
-        console.log("Successfully registered user");
+        setRegistrationAlert({
+          open: true,
+          severity: 'success',
+          message: 'Successfully registered user, Please login to continue',
+        });
+        // alert("Successfully registered user, Please login to continue");
+        // console.log("Successfully registered user");
         const registrationResponse = await axios.post('https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/register', {
           username: username,
           password: password,
@@ -64,8 +78,16 @@ export default function App() {
       }
 
     } catch (error) {
-      alert("Failed to register, username is already taken.")
+
+      setRegistrationAlert({
+        open: true,
+        severity: 'error',
+        message: 'Failed to register, username is already taken.',
+      });
+
       console.error('Registration failed:', error);
+      // alert("Failed to register, username is already taken.")
+      // console.error('Registration failed:', error);
     }
   };
 
@@ -100,8 +122,16 @@ export default function App() {
         }
       }
     } catch (error) {
-      alert("Failed to login")
+      setRegistrationAlert({
+        open: true,
+        severity: 'error',
+        message: 'Failed to login. Username or password incorrect!',
+      });
+
       console.error('Login failed:', error);
+
+      // alert("Failed to login")
+      // console.error('Login failed:', error);
     }
   };
 
@@ -139,12 +169,6 @@ export default function App() {
       console.error('Update User Failed:', error);
     }
   };
-
-  // const [alertOpen, setAlertOpen] = useState(true);
-
-  // const closeAlert = () => {
-  //   setAlertOpen(false);
-  // };
 
   return (
     document.body.style.backgroundColor = '#bae6fd',
@@ -184,14 +208,15 @@ export default function App() {
         onRegistration={handleRegistration}
       />
 
-      {/* {alertOpen && (
+      { // Alert UI 
+      registrationAlert.open && (
         <DescriptionAlerts
-          severity="error"
-          message="An error occurred. This is a custom error message."
+          severity={registrationAlert.severity}
+          message={registrationAlert.message}
           closeable={true}
-          onClose={closeAlert}
+          onClose={() => setRegistrationAlert({ ...registrationAlert, open: false })}
         />
-      )} */}
+      )}
 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -242,3 +267,5 @@ export default function App() {
     </div>
   );
 }
+
+
