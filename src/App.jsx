@@ -17,8 +17,11 @@ import BlogPage from './pages/BlogPage';
 import DemoPage from './pages/DemoPage';
 //import { dummyUsers } from './data/users';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
+// import DescriptionAlerts from './Alerts/alert'; 
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import './scrollbar/custom-scrollbar-ui.css';
+
 
 //add dummy users to local storage-->
 // if (localStorage.getItem("users")) {//do nothing
@@ -137,6 +140,12 @@ export default function App() {
     }
   };
 
+  // const [alertOpen, setAlertOpen] = useState(true);
+
+  // const closeAlert = () => {
+  //   setAlertOpen(false);
+  // };
+
   return (
     document.body.style.backgroundColor = '#bae6fd',
     <div>
@@ -174,6 +183,15 @@ export default function App() {
         onClose={closeRegistrationModal}
         onRegistration={handleRegistration}
       />
+
+      {/* {alertOpen && (
+        <DescriptionAlerts
+          severity="error"
+          message="An error occurred. This is a custom error message."
+          closeable={true}
+          onClose={closeAlert}
+        />
+      )} */}
 
       <Routes>
         <Route path="/" element={<HomePage />} />

@@ -3,6 +3,7 @@ import ceo from './images/main_image_4353.webp';
 import states from './images/states.webp'; 
 import data from './images/data.webp'; 
 import attempt from './images/try.webp'; 
+// import reactlogo from '../../public/logo192.png'; 
 
 function ProductsPage() {
   const ceo_main = {
