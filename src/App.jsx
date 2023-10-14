@@ -194,7 +194,7 @@ export default function App() {
               isProfileComplete ? ( // Redirect to dashboard if profile is complete
                 <Navigate to="/dashboard" />
               ) : (
-                <ProfileCompletionForm onComplete={handleProfileCompletion} /> // Show profile completion form
+                <ProfileCompletionForm user={currentUser} onComplete={handleProfileCompletion} /> // Show profile completion form
               )
             ) : (
               <Navigate to="/" />
