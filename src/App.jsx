@@ -120,6 +120,7 @@ export default function App() {
         } else {
           setProfileComplete(true);
         }
+        localStorage.setItem("currentPage", "");
         if (!isProfileComplete) {
           navigate("/profile-completion");
         } else {
@@ -144,7 +145,11 @@ export default function App() {
     localStorage.removeItem("currentUser");
     setIsLoggedIn(false);
     setCurrentUser(null);
+<<<<<<< HEAD
     setRegistrationAlert({ open: false })
+=======
+    localStorage.setItem("currentPage", ""); 
+>>>>>>> 6c0a4b3 (Fixed issue where wrong page would be highlighted after user logs in and out.)
     navigate("/");
   };
 
