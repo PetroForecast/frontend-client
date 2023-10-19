@@ -1,8 +1,8 @@
 import React from "react";
-import ceo from "./images/main_image_4353.webp";
-import states from "./images/states.webp";
-import data from "./images/data.webp";
-import attempt from "./images/try.webp";
+// import ceo from "./images/main_image_4353.webp";
+// import states from "/images/states.webp";
+// import data from "/images/data.webp";
+// import attempt from "/images/try.webp";
 // import reactlogo from '../../public/logo192.png';
 
 function ProductsPage() {
@@ -99,8 +99,8 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={states}
-              alt="mage1"
+              src={"/images/states.webp"}
+              alt="image1"
               className="background-image"
               style={background_image}
             />
@@ -112,7 +112,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={data}
+              src={"/images/data.webp"}
               alt="mage2"
               className="background-image"
               style={background_image}
@@ -125,7 +125,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={attempt}
+              src={"images/try.webp"}
               alt="mage3"
               className="background-image"
               style={background_image}
