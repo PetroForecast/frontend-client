@@ -76,7 +76,7 @@ function ProductsPage() {
       <div className="Main-image-text" style={ceo_main}>
         <img
           alt="This CEO and entrepreneur are working on their laptops"
-          src={ceo}
+          src={require('../images/main_image_4353.webp')}
           style={ceo_image}
         />
         <div style={ceo_text}>
@@ -98,7 +98,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={states}
+              src={require('../images/states.webp')}
               alt="mage1"
               className="background-image"
               style={background_image}
@@ -111,7 +111,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={data}
+              src={require('../images/data.webp')}
               alt="mage2"
               className="background-image"
               style={background_image}
@@ -124,7 +124,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={attempt}
+              src={require('../images/try.webp')}
               alt="mage3"
               className="background-image"
               style={background_image}
