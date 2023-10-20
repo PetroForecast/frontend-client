@@ -99,7 +99,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={"/images/states.webp"}
+              src="https://petroforecastimages.s3.amazonaws.com/images/states.webp"
               alt="image1"
               className="background-image"
               style={background_image}
@@ -112,7 +112,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={"/images/data.webp"}
+              src="https://petroforecastimages.s3.amazonaws.com/images/data.webp"
               alt="mage2"
               className="background-image"
               style={background_image}
@@ -125,7 +125,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={"images/try.webp"}
+              src="https://petroforecastimages.s3.amazonaws.com/images/try.webp"
               alt="mage3"
               className="background-image"
               style={background_image}
