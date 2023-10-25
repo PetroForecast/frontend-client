@@ -106,6 +106,11 @@ export default function App() {
       console.log(response.data);
       if (response.data) {
         setIsLoggedIn(true);
+        setRegistrationAlert({
+          open: true,
+          severity: 'success',
+          message: 'Successfully logged in, welcome',
+        });
         setCurrentUser(response.data);
         localStorage.setItem("currentUser", JSON.stringify(response.data));
         //console.log((JSON.parse((localStorage.getItem("currentUser"))).isComplete));
@@ -127,7 +132,6 @@ export default function App() {
         severity: 'error',
         message: 'Failed to login. Username or password incorrect!',
       });
-
       console.error('Login failed:', error);
 
       // alert("Failed to login")
