@@ -3,15 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useState } from "react";
 import axios from "axios";
 
-import DescriptionAlerts from "../Alerts/alert";
-
 export default function FuelQuoteForm({ onSubmitQuote, user }) {
-  const [registrationAlert, setRegistrationAlert] = useState({
-    open: false,
-    severity: 'success', // Set the severity based on the message type
-    message: '',
-  });
-
   const [formData, setFormData] = useState({
     id: "",
     gallonsRequested: "",
@@ -25,12 +17,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
     e.preventDefault()
     //add the form data to a new object
     if (formData.gallonsRequested === "" || formData.deliveryAddress === "" || formData.deliveryDate === "" || formData.pricePerGallon === "" || formData.amountDue === "") {
-      setRegistrationAlert({
-        open: true,
-        severity: 'error',
-        message: 'Please fill all fields and try again.',
-      });
-      // alert("Error. Please fill all fields and try again.")
+      alert("Error. Please fill all fields and try again.")
     }
 
     else {
@@ -53,13 +40,8 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         //update state to reflect change in UI
         onSubmitQuote((quotes) => [...quotes, response.data])
       } catch (error) {
-        setRegistrationAlert({
-          open: true,
-          severity: 'error',
-          message: 'Error submitting quote:',
-        });
         console.error("Error submitting quote:", error);
-        // alert("Error submitting quote");
+        alert("Error submitting quote");
       }
       setFormData({
         id: "",
@@ -69,12 +51,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         pricePerGallon: "",
         amountDue: "",
       })
-      setRegistrationAlert({
-        open: true,
-        severity: 'success',
-        message: 'Quote successfully submitted',
-      });
-      // alert("Quote successfully submitted")
+      alert("Quote successfully submitted")
     }
   }
 
@@ -85,15 +62,6 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
 
   return (
     <Paper elevation={4} sx={{ p: 2 }}>
-      { // Alert UI 
-      registrationAlert.open && (
-          <DescriptionAlerts
-          severity={registrationAlert.severity}
-          message={registrationAlert.message}
-          closeable={true}
-          onClose={() => setRegistrationAlert({ ...registrationAlert, open: false })}
-          />
-      )}
       <Typography gutterBottom color="primary" variant="h4">Fuel Quote Form</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
