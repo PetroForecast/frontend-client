@@ -109,7 +109,7 @@ export default function App() {
         setRegistrationAlert({
           open: true,
           severity: 'success',
-          message: 'Successfully logged in, welcome',
+          message: 'Successfully logged in, welcome!',
         });
         setCurrentUser(response.data);
         localStorage.setItem("currentUser", JSON.stringify(response.data));
@@ -144,6 +144,7 @@ export default function App() {
     localStorage.removeItem("currentUser");
     setIsLoggedIn(false);
     setCurrentUser(null);
+    setRegistrationAlert({open: false})
     navigate("/");
   };
 

@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const BlogPage = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const hoverStyle = {
+    padding: '10px',
+    backgroundColor: isHovered ? 'blue' : 'transparent',
+    transition: 'background-color 0.3s',
+    cursor: 'pointer',
+  };
+
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -28,7 +37,7 @@ const BlogPage = () => {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    transition: 'background-color 0.2s', // Add a smooth background color transition
+    // transition: 'background-color 0.2s', // Add a smooth background color transition
   };
 
   const videoStyle = {
