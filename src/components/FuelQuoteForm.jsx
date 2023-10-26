@@ -1,39 +1,43 @@
 import { TextField, Typography, Paper, Button } from "@mui/material";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import axios from "axios";
 
 import DescriptionAlerts from "../Alerts/alert";
 
+//Note on fuel quote form (TODO/FIXME): If a user does not specify the delivery address, default it to that user's delivery address(one), else send the delivery address through
+
 export default function FuelQuoteForm({ onSubmitQuote, user }) {
   const [registrationAlert, setRegistrationAlert] = useState({
     open: false,
-    severity: 'success', // Set the severity based on the message type
-    message: '',
+    severity: "success", // Set the severity based on the message type
+    message: "",
   });
 
   const [formData, setFormData] = useState({
     id: "",
     gallonsRequested: "",
-    deliveryAddress: "",
+    deliveryAddress: user.addressOne,
     deliveryDate: "",
-    pricePerGallon: "",
-    amountDue: "",
+    pricePerGallon: "1.5",
+    amountDue: "100",
   });
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     //add the form data to a new object
-    if (formData.gallonsRequested === "" || formData.deliveryAddress === "" || formData.deliveryDate === "" || formData.pricePerGallon === "" || formData.amountDue === "") {
+    if (
+      formData.gallonsRequested === "" ||
+      formData.deliveryAddress === "" ||
+      formData.deliveryDate === ""
+    ) {
       setRegistrationAlert({
         open: true,
-        severity: 'error',
-        message: 'Please fill all fields and try again.',
+        severity: "error",
+        message: "Please fill all fields and try again.",
       });
       // alert("Error. Please fill all fields and try again.")
-    }
-
-    else {
+    } else {
       const username = user.username;
       const newQuote = {
         id: uuidv4(),
@@ -43,20 +47,29 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         pricePerGallon: formData.pricePerGallon,
         amountDue: formData.amountDue,
         user: username,
-      }
+      };
 
       try {
-        const response = await axios.post(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/add-quote`, newQuote);
+        const response = await axios.post(
+          `https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/add-quote`,
+          newQuote
+        );
         //console.log(response.data);
         //updating local storage
-        localStorage.setItem("quotes", JSON.stringify([...JSON.parse(localStorage.getItem("quotes")), response.data]))
+        localStorage.setItem(
+          "quotes",
+          JSON.stringify([
+            ...JSON.parse(localStorage.getItem("quotes")),
+            response.data,
+          ])
+        );
         //update state to reflect change in UI
-        onSubmitQuote((quotes) => [...quotes, response.data])
+        // onSubmitQuote((quotes) => [...quotes, response.data]);
       } catch (error) {
         setRegistrationAlert({
           open: true,
-          severity: 'error',
-          message: 'Error submitting quote:',
+          severity: "error",
+          message: "Error submitting quote:",
         });
         console.error("Error submitting quote:", error);
         // alert("Error submitting quote");
@@ -68,33 +81,42 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         deliveryDate: "",
         pricePerGallon: "",
         amountDue: "",
-      })
+      });
       setRegistrationAlert({
         open: true,
-        severity: 'success',
-        message: 'Quote successfully submitted',
+        severity: "success",
+        message: "Quote successfully submitted",
       });
       // alert("Quote successfully submitted")
     }
   }
 
   function handleChange(e) {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    if (name === "gallonsRequested") {
+      value = value.replace(/\D/g, "");
+    }
     setFormData({ ...formData, [name]: value });
   }
 
   return (
     <Paper elevation={4} sx={{ p: 2 }}>
-      { // Alert UI 
-      registrationAlert.open && (
+      {
+        // Alert UI
+        registrationAlert.open && (
           <DescriptionAlerts
-          severity={registrationAlert.severity}
-          message={registrationAlert.message}
-          closeable={true}
-          onClose={() => setRegistrationAlert({ ...registrationAlert, open: false })}
+            severity={registrationAlert.severity}
+            message={registrationAlert.message}
+            closeable={true}
+            onClose={() =>
+              setRegistrationAlert({ ...registrationAlert, open: false })
+            }
           />
-      )}
-      <Typography gutterBottom color="primary" variant="h4">Fuel Quote Form</Typography>
+        )
+      }
+      <Typography gutterBottom color="primary" variant="h4">
+        Fuel Quote Form
+      </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
@@ -102,7 +124,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
           value={formData.gallonsRequested}
           onChange={handleChange}
           label="Gallons Requested"
-          type="number"
+          type="text" // Change the type to "text"
           required
           variant="outlined"
           sx={{ mb: 2 }}
@@ -112,11 +134,10 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
           name="deliveryAddress"
           label="Delivery Address"
           value={formData.deliveryAddress}
-          onChange={handleChange}
-          InputProps={{
-            readOnly: false,
-          }}
           variant="outlined"
+          InputProps={{
+            readOnly: true,
+          }}
           sx={{ mb: 2 }}
         />
         <TextField
@@ -134,34 +155,33 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         />
         <TextField
           fullWidth
+          disabled
           name="pricePerGallon"
-          label="Suggested Price / gallon"
+          label="Suggested Price / gallon ($)"
           type="number"
           value={formData.pricePerGallon}
-          onChange={handleChange}
-          InputProps={{
-            readOnly: false,
-          }}
           variant="outlined"
-          sx={{ mb: 2 }}
+          sx={{
+            mb: 2,
+          }}
         />
         <TextField
           fullWidth
+          disabled
           name="amountDue"
-          label="Total Amount Due"
+          label="Total Amount Due ($)"
           type="number"
           value={formData.amountDue}
-          onChange={handleChange}
-          InputProps={{
-            readOnly: false,
-          }}
           variant="outlined"
-          sx={{ mb: 2 }}
+          sx={{
+            mb: 2,
+          }}
         />
-        <Button type="submit" variant="contained">SUBMIT</Button>
+
+        <Button type="submit" variant="contained">
+          SUBMIT
+        </Button>
       </form>
     </Paper>
   );
 }
-
-
