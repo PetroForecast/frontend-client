@@ -157,7 +157,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
           fullWidth
           disabled
           name="pricePerGallon"
-          label="Suggested Price / gallon"
+          label="Suggested Price / gallon ($)"
           type="number"
           value={formData.pricePerGallon}
           variant="outlined"
@@ -169,7 +169,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
           fullWidth
           disabled
           name="amountDue"
-          label="Total Amount Due"
+          label="Total Amount Due ($)"
           type="number"
           value={formData.amountDue}
           variant="outlined"
