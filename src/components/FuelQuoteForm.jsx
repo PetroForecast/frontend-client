@@ -38,7 +38,6 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
       });
       // alert("Error. Please fill all fields and try again.")
     } else {
-      const username = user.username;
       const newQuote = {
         id: uuidv4(),
         gallonsRequested: formData.gallonsRequested,
@@ -46,9 +45,9 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         deliveryDate: formData.deliveryDate,
         pricePerGallon: formData.pricePerGallon,
         amountDue: formData.amountDue,
-        user: username,
+        user: user.userId,
       };
-
+      console.log(newQuote);
       try {
         const response = await axios.post(
           `https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/add-quote`,
