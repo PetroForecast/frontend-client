@@ -61,18 +61,18 @@ function UserProfile({ user, onUpdateProfile }) {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  name="address1"
-                  label="Address 1"
-                  value={editedUser.address1}
+                  name="addressOne"
+                  label="Address One"
+                  value={editedUser.addressOne}
                   onChange={handleChange}
                   fullWidth
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  name="address2"
-                  label="Address 2"
-                  value={editedUser.address2}
+                  name="addressTwo"
+                  label="Address two"
+                  value={editedUser.addressTwo}
                   onChange={handleChange}
                   fullWidth
                 />
@@ -118,14 +118,14 @@ function UserProfile({ user, onUpdateProfile }) {
               <Grid item xs={6}>
                 <Paper elevation={0} style={borderStyle}>
                   <Typography variant="h6">Address 1:</Typography>
-                  <Typography variant="body1">{user.address1}</Typography>
+                  <Typography variant="body1">{user.addressOne}</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={6}>
                 <Paper elevation={0} style={borderStyle}>
                   <Typography variant="h6">Address 2:</Typography>
                   <Typography variant="body1">
-                    {user.address2 ? user.address2 : 'N/A'}
+                    {user.addressTwo ? user.addressTwo : 'N/A'}
                   </Typography>
                 </Paper>
               </Grid>

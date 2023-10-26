@@ -74,7 +74,7 @@ function Dashboard({ user }) {
             <CustomTabPanel value={value} index={0}>
               <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
                 <Typography component="h2" variant="h4" color="primary" gutterBottom>User Information</Typography>
-                <Typography variant="body1">Username: {user.username}</Typography>
+                <Typography variant="body1">Username: {user.userId}</Typography>
                 <Typography variant="body1">Full Name: {user.fullName}</Typography>
               </Paper>
             </CustomTabPanel>

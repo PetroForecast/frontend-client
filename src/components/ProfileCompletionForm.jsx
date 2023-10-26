@@ -87,7 +87,7 @@ function ProfileCompletionForm({ user, onComplete }) {
                 ...formData,
                 isComplete: "true",
             };
-            const response = await axios.put(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/update/${user.username}`, requestData);
+            const response = await axios.put(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/update/${user.userId}`, requestData);
             console.log(response);
             onComplete(true);
         } catch (error) {

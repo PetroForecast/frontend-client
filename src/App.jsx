@@ -115,7 +115,7 @@ export default function App() {
         localStorage.setItem("currentUser", JSON.stringify(response.data));
         //console.log((JSON.parse((localStorage.getItem("currentUser"))).isComplete));
         let profileComplete = JSON.parse((localStorage.getItem("currentUser"))).isComplete;
-        if (profileComplete === 'false') {
+        if (profileComplete === 0) {
           setProfileComplete(false);
         } else {
           setProfileComplete(true);
@@ -164,7 +164,7 @@ export default function App() {
 
   const handleUpdateProfile = async (updatedUser) => {
     try {
-      const response = await axios.put(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/update/${updatedUser.username}`, updatedUser)
+      const response = await axios.put(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/update/${updatedUser.userId}`, updatedUser)
       console.log("Profile update action on:", response.data);
       setCurrentUser(response.data);
       localStorage.setItem("currentUser", JSON.stringify(response.data));
@@ -213,14 +213,14 @@ export default function App() {
       />
 
       { // Alert UI 
-      registrationAlert.open && (
-        <DescriptionAlerts
-          severity={registrationAlert.severity}
-          message={registrationAlert.message}
-          closeable={true}
-          onClose={() => setRegistrationAlert({ ...registrationAlert, open: false })}
-        />
-      )}
+        registrationAlert.open && (
+          <DescriptionAlerts
+            severity={registrationAlert.severity}
+            message={registrationAlert.message}
+            closeable={true}
+            onClose={() => setRegistrationAlert({ ...registrationAlert, open: false })}
+          />
+        )}
 
       <Routes>
         <Route path="/" element={<HomePage />} />
