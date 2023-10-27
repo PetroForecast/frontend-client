@@ -58,6 +58,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         // Update the "quotes" item in localStorage
         localStorage.setItem("quotes", JSON.stringify([...existingQuotes, response.data]));
         //update state to reflect change in UI
+        onSubmitQuote();
       } catch (error) {
         setRegistrationAlert({
           open: true,

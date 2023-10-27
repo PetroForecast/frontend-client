@@ -45,22 +45,34 @@ function Dashboard({ user }) {
     setValue(newValue);
   };
 
-  useEffect(
-    function () {
-      async function fetchFuelQuoteHistory() {
-        try {
-          const response = await axios.get(
-            `https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/${user.userId}`
-          );
-          setLatestQuotes(response.data);
-        } catch (error) {
-          console.error("Error fetching fuel quote history:", error);
-        }
-      }
-      fetchFuelQuoteHistory();
-    },
-    [user.userId]
-  );
+  // useEffect(
+  //   function () {
+  //     async function fetchFuelQuoteHistory() {
+  //       try {
+  //         const response = await axios.get(
+  //           `https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/${user.userId}`
+  //         );
+  //         setLatestQuotes(response.data);
+  //       } catch (error) {
+  //         console.error("Error fetching fuel quote history:", error);
+  //       }
+  //     }
+  //     fetchFuelQuoteHistory();
+  //   },
+  //   [user.userId]
+  // );
+
+  const fetchFuelQuoteHistory = async () => {
+    try {
+      const response = await axios.get(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/${user.userId}`);
+      setLatestQuotes(response.data);
+    } catch (error) {
+      console.error("Error fetching fuel quote history:", error);
+    }
+  }
+  useEffect(() => {
+    fetchFuelQuoteHistory();
+  }, [user.userId]);
 
   return (
     <div>
@@ -104,7 +116,7 @@ function Dashboard({ user }) {
               </Paper>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <FuelQuoteForm user={user} onSubmitQuote={setLatestQuotes} />
+              <FuelQuoteForm user={user} onSubmitQuote={fetchFuelQuoteHistory} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
               <FuelQuoteHistoryTable latestQuotes={latestQuotes} />
