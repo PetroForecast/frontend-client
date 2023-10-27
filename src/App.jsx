@@ -144,7 +144,7 @@ export default function App() {
     localStorage.removeItem("currentUser");
     setIsLoggedIn(false);
     setCurrentUser(null);
-    setRegistrationAlert({open: false})
+    setRegistrationAlert({ open: false })
     navigate("/");
   };
 
@@ -158,9 +158,10 @@ export default function App() {
     navigate("/dashboard");
   };
 
-  const handleProfileCompletion = (profileComplete) => {
+  const handleProfileCompletion = (updatedUser, profileComplete) => {
     setProfileComplete(profileComplete);
     localStorage.setItem("profileCompleted", profileComplete ? "true" : "false");
+    setCurrentUser(updatedUser);
   };
 
   const handleUpdateProfile = async (updatedUser) => {

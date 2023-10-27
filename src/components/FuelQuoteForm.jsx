@@ -53,17 +53,11 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
           `https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/add-quote`,
           newQuote
         );
-        //console.log(response.data);
-        //updating local storage
-        localStorage.setItem(
-          "quotes",
-          JSON.stringify([
-            ...JSON.parse(localStorage.getItem("quotes")),
-            response.data,
-          ])
-        );
+        //Retrieve and parse the existing quotes from localStorage
+        const existingQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
+        // Update the "quotes" item in localStorage
+        localStorage.setItem("quotes", JSON.stringify([...existingQuotes, response.data]));
         //update state to reflect change in UI
-        // onSubmitQuote((quotes) => [...quotes, response.data]);
       } catch (error) {
         setRegistrationAlert({
           open: true,

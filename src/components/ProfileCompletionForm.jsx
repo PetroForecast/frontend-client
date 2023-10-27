@@ -14,9 +14,10 @@ import axios from "axios";
 
 function ProfileCompletionForm({ user, onComplete }) {
     const [formData, setFormData] = useState({
+        username: user.userId,
         fullName: "",
-        address1: "",
-        address2: "",
+        addressOne: "",
+        addressTwo: "",
         city: "",
         state: "",
         zipcode: "",
@@ -89,7 +90,7 @@ function ProfileCompletionForm({ user, onComplete }) {
             };
             const response = await axios.put(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/update/${user.userId}`, requestData);
             console.log(response);
-            onComplete(true);
+            onComplete({ ...user, ...requestData }, true);
         } catch (error) {
             alert("Error updating profile:", error);
             console.error("Error updating profile:", error);
@@ -116,10 +117,10 @@ function ProfileCompletionForm({ user, onComplete }) {
                 />
                 <TextField
                     fullWidth
-                    name="address1"
-                    label="Address 1"
+                    name="addressOne"
+                    label="Address One"
                     required
-                    value={formData.address1}
+                    value={formData.addressOne}
                     onChange={handleChange}
                     InputLabelProps={{
                         shrink: true,
@@ -128,9 +129,9 @@ function ProfileCompletionForm({ user, onComplete }) {
                 />
                 <TextField
                     fullWidth
-                    name="address2"
-                    label="Address 2"
-                    value={formData.address2}
+                    name="addressTwo"
+                    label="Address Two"
+                    value={formData.addressTwo}
                     onChange={handleChange}
                     InputLabelProps={{
                         shrink: true,
