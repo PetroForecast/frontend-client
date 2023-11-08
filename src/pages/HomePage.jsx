@@ -1,6 +1,23 @@
 import { Box, Container, Typography, Grid } from '@mui/material';
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { getNews } from '../data/News.api';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+
+//Here we get news
+const data = await getNews();
+// console.log(data);
+var increment = 1; 
+var cardContent = {} // "author", "description", "title", "url", "urlToImage"
+for(let d of data){
+  cardContent[increment] = d;
+  increment+=1;
+}
+const cards = Array(data.length).fill(1).map((n, i) => n + i);
 
 export default function HomePage() {
   const iframeStyle = { width: '60%', height: '250px', boxShadow: '10px 10px rgba(0, 0, 0, 0.5)', backgroundColor: 'beige' };
@@ -50,20 +67,34 @@ export default function HomePage() {
 
   return (
     <main>
+      {/* Below is code for first box with slide show of images */}
       <Box
-       sx={{
-        backgroundImage: `url(${returnPhotoURL()})`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        pt: 12,
-        pb: 60,
-      }}>
+        sx={{
+          position: "relative",
+          pt: 12,
+          pb: 40,
+        }}
+      >
+        <div
+          style={{
+            backgroundImage: `url(${returnPhotoURL()})`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            filter: "blur(6px)",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: -1, // Ensure the background image is behind other content
+          }}
+        ></div>
         <Container maxWidth="md">
           <Typography
             variant="h2"
             align="center"
-            font-weight="bold"
+            fontWeight="bold"
             gutterBottom
             sx={{
               fontFamily: 'monospace',
@@ -76,82 +107,80 @@ export default function HomePage() {
             PETROFORECAST
           </Typography>
           <Typography variant="h5" align="center" color="white" paragraph>
-            We get you the best quotes, the best oil, delivered to you, fast.
+            We get you the best quotes, the best fuel, delivered to you, fast.
           </Typography>
         </Container>
       </Box>
       <br/><br/>
+      {/* Below is code for first line of stuff //fix explaination later */}
       <Container maxWidth='xl'>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <Box
             sx={{
-              backgroundColor: "white",
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-              pt: 1,
-              pb: 1,
-            }}> One</Box>
+              pt: 25,
+              pb: 25,
+            }}> 
+            <Typography variant="h5" align="center" color="inherit" paragraph>
+              You order the fuel online, we ship it to you.
+            </Typography>
+            </Box>
         </Grid>
         <Grid item xs={8}>
           <Box
             sx={{
-              backgroundColor: "white",
+              borderRadius: "5px",
+              backgroundImage: `url(https://gomotive.com/wp-content/uploads/2022/08/What-is-the-most-common-mode-of-oil-transportation-Feature.jpg)`,
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-              pt: 1,
-              pb: 1,
-            }}>Two</Box>
+              pt: 25,
+              pb: 25,
+            }}></Box>
         </Grid>
+        {/* Below is code for second line of stuff //fix explaination later */}
         <Grid item xs={8}>
           <Box
             sx={{
-              backgroundColor: "white",
+              borderRadius: "5px",
+              backgroundImage: `url(https://www.masslive.com/resizer/W8pdZ_jRPJlIcKg2phyNSLg_IHc=/1280x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/TBJTAHXBSJGIJGCJRJSAVXGRFE.jpg)`,
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-              pt: 1,
-              pb: 1,
+              pt: 25,
+              pb: 25,
             }}>Three</Box>
         </Grid>
         <Grid item xs={4}>
           <Box
             sx={{
-              backgroundColor: "white",
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-              pt: 1,
-              pb: 1,
-            }}>Four</Box>
+              pt: 25,
+              pb: 25,
+            }}>
+              <Typography variant="h5" align="center" color="inherit" paragraph>
+                Very easy process, very frictionless.
+              </Typography>
+            </Box>
         </Grid>
       </Grid>
       </Container>
-      <Container maxWidth="md">
-        <Typography
-          variant="h2"
+      {/* Api for charts */}
+      <br/><br/>
+      <Container maxWidth="xl">
+        <Typography variant="h3"
           align="center"
-          font-weight="bold"
-          gutterBottom
           sx={{
             fontFamily: 'monospace',
-            fontWeight: 700,
-            letterSpacing: '.05rem',
-            color: 'inherit',
-            textDecoration: 'none',
           }}
+          gutterBottom
         >
-          Some stuff about our company/ news
-        </Typography>
-        <Typography variant="h5" align="center" color="white" paragraph>
-          Our company is great
-        </Typography>
-      </Container>
-      <Container maxWidth="md">
-        <Typography variant="h5" align="center" color="inherit" paragraph>
-          Recent trends
+          News and Trends
         </Typography>
         <div>
           <Grid container spacing={2}>
@@ -193,7 +222,49 @@ export default function HomePage() {
           </div>
         </div>
       </Container>
-
+      {/* This section is dedicated to news */}
+        <Container>
+          <Typography
+            variant="h3"
+            align="center"
+            sx={{
+              fontFamily: 'monospace',
+            }}
+            gutterBottom
+          >
+            Latest Stories
+          </Typography>
+          <br/>
+          <Grid container spacing={4} justifyContent="center">
+            {cards.map((card) => (
+              <Grid item key={card} xs={12} sm={6} md={4}>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                  <CardMedia
+                    component="div"
+                    sx={{
+                      // 16:9
+                      pt: '56.25%',
+                    }}
+                    image={cardContent[card]["urlToImage"]} 
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {cardContent[card]["title"]}
+                    </Typography>
+                    <Typography>
+                      {cardContent[card]["description"]}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" href={cardContent[card]["url"]}>Go to article</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
     </main>
     
     // <div>

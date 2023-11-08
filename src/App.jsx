@@ -19,6 +19,7 @@ import DemoPage from './pages/DemoPage';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
 import axios from 'axios';
 import './scrollbar/custom-scrollbar-ui.css';
+import Footer from './components/Footer';
 
 // Import the DescriptionAlerts component from Alert.jsx
 import DescriptionAlerts from './Alerts/alert';
@@ -272,6 +273,7 @@ export default function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      {/* <Footer/> */}
     </div>
   );
 }
