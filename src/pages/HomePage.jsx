@@ -75,19 +75,29 @@ export default function HomePage() {
           pb: 40,
         }}
       >
-        <div
+        <div //This code is for the slideshow
           style={{
             backgroundImage: `url(${returnPhotoURL()})`,
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
-            filter: "blur(6px)",
             position: "absolute",
             top: 0,
             left: 0,
             width: "100%",
             height: "100%",
             zIndex: -1, // Ensure the background image is behind other content
+          }}
+        ></div>
+        <div //This code is for the dark filter
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)", // Adjust the last value (0.2) to control the darkness
+            zIndex: -1, // Ensure the overlay is behind other content
           }}
         ></div>
         <Container maxWidth="md">
@@ -100,7 +110,7 @@ export default function HomePage() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.05rem',
-              color: 'inherit',
+              color: 'white',
               textDecoration: 'none',
             }}
           >
