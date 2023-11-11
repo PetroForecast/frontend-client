@@ -1,6 +1,9 @@
 /*TODO: 
-- role based user authentication
-- some logic to determine if the user is logged in, e.g., checking a token, etc.
+- Homepage change to a traditional format "Welcome to our website..." (Not required but lets try to do this) (Yuto & Jessica)
+- Modify Fuel quote forms 'suggested price' and 'total amount due' modify form layout (Jaz)
+- Get quote button (fuel quote form) (Jaz)
+- Partial form submission (fuel quote form) (Max & Jaz)
+- Submit quote saves the quote to database (fuel quote form) (Max & Jaz)
 */
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
