@@ -23,6 +23,37 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
     amountDue: "100",
   });
 
+  async function handleGetQuote(e) {
+    e.preventDefault();
+    //add the form data to a new object
+    if (
+      formData.gallonsRequested === "" ||
+      formData.deliveryAddress === "" ||
+      formData.deliveryDate === ""
+    ) {
+      setRegistrationAlert({
+        open: true,
+        severity: "error",
+        message: "Please fill all fields and try again.",
+      });
+      // alert("Error. Please fill all fields and try again.")
+    } else {
+      const newQuote = {
+        id: uuidv4(),
+        gallonsRequested: formData.gallonsRequested,
+        deliveryAddress: formData.deliveryAddress,
+        deliveryDate: formData.deliveryDate,
+        pricePerGallon: formData.pricePerGallon,
+        amountDue: formData.amountDue,
+        user: user.userId,
+      };
+      console.log(newQuote);
+      //API call here
+
+      //Set form data here
+    }
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     //add the form data to a new object
@@ -174,6 +205,11 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
 
         <Button type="submit" variant="contained">
           SUBMIT
+        </Button>
+        <Button type="submit" variant="outlined" onClick={handleGetQuote} sx={{
+          marginLeft: "10px",
+        }}>
+          Get Quote
         </Button>
       </form>
     </Paper>
