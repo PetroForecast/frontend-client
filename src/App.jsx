@@ -22,6 +22,7 @@ import DemoPage from './pages/DemoPage';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
 import axios from 'axios';
 import './scrollbar/custom-scrollbar-ui.css';
+import Footer from './components/Footer';
 
 // Import the DescriptionAlerts component from Alert.jsx
 import DescriptionAlerts from './Alerts/alert';
@@ -123,6 +124,7 @@ export default function App() {
         } else {
           setProfileComplete(true);
         }
+        localStorage.setItem("currentPage", "");
         if (!isProfileComplete) {
           navigate("/profile-completion");
         } else {
@@ -148,6 +150,7 @@ export default function App() {
     setIsLoggedIn(false);
     setCurrentUser(null);
     setRegistrationAlert({ open: false })
+    localStorage.setItem("currentPage", "");
     navigate("/");
   };
 
@@ -273,6 +276,7 @@ export default function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      {/* <Footer/> */}
     </div>
   );
 }
