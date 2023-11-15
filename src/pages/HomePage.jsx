@@ -2,11 +2,6 @@ import { Box, Container, Typography, Grid } from '@mui/material';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { getNews } from '../data/News.api';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 
 //Here we get news
 const data = await getNews();
@@ -233,7 +228,7 @@ export default function HomePage() {
         </div>
       </Container>
       {/* This section is dedicated to news */}
-        <Container>
+        {/* <Container>
           <Typography
             variant="h3"
             align="center"
@@ -274,7 +269,7 @@ export default function HomePage() {
               </Grid>
             ))}
           </Grid>
-        </Container>
+        </Container> */}
     </main>
     
     // <div>

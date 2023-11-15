@@ -8,7 +8,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const pages = ['Products', 'Pricing', 'Blog', 'Demo'];
+const pages = ['Products', 'Blog', 'Demo'];
 
 export default function DefaultAppBar(props) {
   const [activeLink, setActiveLink] = React.useState(''); // State to track the active link
