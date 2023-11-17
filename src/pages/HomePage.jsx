@@ -95,7 +95,7 @@ export default function HomePage() {
             zIndex: -1, // Ensure the overlay is behind other content
           }}
         ></div>
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
           <Typography
             variant="h2"
             align="center"
@@ -112,25 +112,80 @@ export default function HomePage() {
             PETROFORECAST
           </Typography>
           <Typography variant="h5" align="center" color="white" paragraph>
-            We get you the best quotes, the best fuel, delivered to you, fast.
+          Revolutionizing Your Fuel Experience, Unleash the Power of Precision Fuel Forecasting!<br/>
+          Welcome to PetroForecast, where your fuel needs are not just met but meticulously predicted for optimal savings and convenience.
           </Typography>
         </Container>
       </Box>
       <br/><br/>
       {/* Below is code for first line of stuff //fix explaination later */}
-      <Container maxWidth='xl'>
+      <Container maxWidth='xl' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Typography variant="h3"
+        align="center"
+        sx={{
+          fontFamily: 'monospace',
+        }}
+        gutterBottom
+      >
+        How It Works
+      </Typography> 
+      <Typography variant="h5" align="center" maxWidth="md" paragraph>
+        <strong><em>Seamless Fuel Procurement, Unmatched Efficiency</em></strong><br/>
+        Experience the future of fuel ordering – a swift, hassle-free process that puts you in control. 
+        At PetroForecast, we've mastered the art of fuel prediction to ensure you receive not just fuel, 
+        but a tailored solution designed just for you.
+      </Typography>
+      <br/><br/>
+      <Typography variant="h3"
+        align="center"
+        sx={{
+          fontFamily: 'monospace',
+        }}
+        gutterBottom
+      >
+        Why Choose PetroForecast
+      </Typography> <br/>
       <Grid container spacing={2}>
+      <Grid item xs={8}>
+          <Box
+            sx={{
+              borderRadius: "5px",
+              backgroundImage: `url(https://www.usnews.com/object/image/0000018b-679c-def8-abaf-7fdcebeb0000/ap23201685137103.jpg?update-time=1698250512831&size=responsive640)`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              pt: 25,
+              pb: 25,
+            }}></Box>
+        </Grid>
         <Grid item xs={4}>
           <Box
             sx={{
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-              pt: 25,
-              pb: 25,
+              textAlign: 'center',
+              pt: 18,
+              pb: 18,
+            }}>
+              <Typography variant="h5" align="center" color="inherit" paragraph>
+                <strong>Precision Predictions:</strong> Our cutting-edge algorithms analyze various factors, 
+                from your location and purchase history to the gallons you need, providing you with the most accurate fuel rate predictions.
+              </Typography>
+            </Box>
+        </Grid>
+        <Grid item xs={4}>
+          <Box
+            sx={{
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              pt: 20,
+              pb: 20,
             }}> 
             <Typography variant="h5" align="center" color="inherit" paragraph>
-              You order the fuel online, we ship it to you.
+              <strong>Speedy Delivery:</strong> Once you've placed your order, our rapid delivery system ensures your fuel reaches you promptly, 
+              keeping your operations running smoothly.
             </Typography>
             </Box>
         </Grid>
@@ -157,7 +212,7 @@ export default function HomePage() {
               backgroundRepeat: "no-repeat",
               pt: 25,
               pb: 25,
-            }}>Three</Box>
+            }}></Box>
         </Grid>
         <Grid item xs={4}>
           <Box
@@ -165,15 +220,20 @@ export default function HomePage() {
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-              pt: 25,
-              pb: 25,
+              textAlign: 'center',
+              pt: 20,
+              pb: 16,
             }}>
               <Typography variant="h5" align="center" color="inherit" paragraph>
-                Very easy process, very frictionless.
+                <strong>Unbeatable Convenience:</strong> PetroForecast takes the complexity out of fuel procurement. 
+                With just a few clicks, you're on your way to receiving top-quality fuel at the best rates.
               </Typography>
             </Box>
         </Grid>
       </Grid>
+      <Typography variant="h5" align="center" maxWidth="md" paragraph>
+        Fueling your success, one prediction at a time. Choose PetroForecast – where innovation meets your energy needs.
+      </Typography>
       </Container>
       {/* Api for charts */}
       <br/><br/>
