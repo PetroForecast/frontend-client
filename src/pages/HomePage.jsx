@@ -157,7 +157,7 @@ export default function HomePage() {
               backgroundRepeat: "no-repeat",
               pt: 25,
               pb: 25,
-            }}>Three</Box>
+            }}></Box>
         </Grid>
         <Grid item xs={4}>
           <Box
