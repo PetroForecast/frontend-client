@@ -273,7 +273,7 @@ export default function App() {
         <Route path="/demo" element={<DemoPage />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/pricing" element={<PricingPage />} />
-        <Route path="/blog" element={<BlogPage />} />
+        {/* <Route path="/blog" element={<BlogPage />} /> */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       {/* <Footer/> */}
