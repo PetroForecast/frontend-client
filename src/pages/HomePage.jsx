@@ -1,18 +1,19 @@
 import { Box, Container, Typography, Grid } from '@mui/material';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { getNews } from '../data/News.api';
+// MOVED TO BLOG
+//import { getNews } from '../data/News.api';
 
-//Here we get news
-const data = await getNews();
-// console.log(data);
-var increment = 1; 
-var cardContent = {} // "author", "description", "title", "url", "urlToImage"
-for(let d of data){
-  cardContent[increment] = d;
-  increment+=1;
-}
-const cards = Array(data.length).fill(1).map((n, i) => n + i);
+// //Here we get news
+// const data = await getNews();
+// // console.log(data);
+// var increment = 1; 
+// var cardContent = {} // "author", "description", "title", "url", "urlToImage"
+// for(let d of data){
+//   cardContent[increment] = d;
+//   increment+=1;
+// }
+// const cards = Array(data.length).fill(1).map((n, i) => n + i);
 
 export default function HomePage() {
   const iframeStyle = { width: '60%', height: '250px', boxShadow: '10px 10px rgba(0, 0, 0, 0.5)', backgroundColor: 'beige' };
@@ -112,131 +113,131 @@ export default function HomePage() {
             PETROFORECAST
           </Typography>
           <Typography variant="h5" align="center" color="white" paragraph>
-          Revolutionizing Your Fuel Experience, Unleash the Power of Precision Fuel Forecasting!<br/>
-          Welcome to PetroForecast, where your fuel needs are not just met but meticulously predicted for optimal savings and convenience.
+            Revolutionizing Your Fuel Experience, Unleash the Power of Precision Fuel Forecasting!<br />
+            Welcome to PetroForecast, where your fuel needs are not just met but meticulously predicted for optimal savings and convenience.
           </Typography>
         </Container>
       </Box>
-      <br/><br/>
+      <br /><br />
       {/* Below is code for first line of stuff //fix explaination later */}
       <Container maxWidth='xl' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Typography variant="h3"
-        align="center"
-        sx={{
-          fontFamily: 'monospace',
-        }}
-        gutterBottom
-      >
-        How It Works
-      </Typography> 
-      <Typography variant="h5" align="center" maxWidth="md" paragraph>
-        <strong><em>Seamless Fuel Procurement, Unmatched Efficiency</em></strong><br/>
-        Experience the future of fuel ordering – a swift, hassle-free process that puts you in control. 
-        At PetroForecast, we've mastered the art of fuel prediction to ensure you receive not just fuel, 
-        but a tailored solution designed just for you.
-      </Typography>
-      <br/><br/>
-      <Typography variant="h3"
-        align="center"
-        sx={{
-          fontFamily: 'monospace',
-        }}
-        gutterBottom
-      >
-        Why Choose PetroForecast
-      </Typography> <br/>
-      <Grid container spacing={2}>
-      <Grid item xs={8}>
-          <Box
-            sx={{
-              borderRadius: "5px",
-              backgroundImage: `url(https://www.usnews.com/object/image/0000018b-679c-def8-abaf-7fdcebeb0000/ap23201685137103.jpg?update-time=1698250512831&size=responsive640)`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              pt: 25,
-              pb: 25,
-            }}></Box>
-        </Grid>
-        <Grid item xs={4}>
-          <Box
-            sx={{
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              textAlign: 'center',
-              pt: 18,
-              pb: 18,
-            }}>
+        <Typography variant="h3"
+          align="center"
+          sx={{
+            fontFamily: 'monospace',
+          }}
+          gutterBottom
+        >
+          How It Works
+        </Typography>
+        <Typography variant="h5" align="center" maxWidth="md" paragraph>
+          <strong><em>Seamless Fuel Procurement, Unmatched Efficiency</em></strong><br />
+          Experience the future of fuel ordering – a swift, hassle-free process that puts you in control.
+          At PetroForecast, we've mastered the art of fuel prediction to ensure you receive not just fuel,
+          but a tailored solution designed just for you.
+        </Typography>
+        <br /><br />
+        <Typography variant="h3"
+          align="center"
+          sx={{
+            fontFamily: 'monospace',
+          }}
+          gutterBottom
+        >
+          Why Choose PetroForecast
+        </Typography> <br />
+        <Grid container spacing={2}>
+          <Grid item xs={8}>
+            <Box
+              sx={{
+                borderRadius: "5px",
+                backgroundImage: `url(https://www.usnews.com/object/image/0000018b-679c-def8-abaf-7fdcebeb0000/ap23201685137103.jpg?update-time=1698250512831&size=responsive640)`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                pt: 25,
+                pb: 25,
+              }}></Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Box
+              sx={{
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                textAlign: 'center',
+                pt: 18,
+                pb: 18,
+              }}>
               <Typography variant="h5" align="center" color="inherit" paragraph>
-                <strong>Precision Predictions:</strong> Our cutting-edge algorithms analyze various factors, 
+                <strong>Precision Predictions:</strong> Our cutting-edge algorithms analyze various factors,
                 from your location and purchase history to the gallons you need, providing you with the most accurate fuel rate predictions.
               </Typography>
             </Box>
-        </Grid>
-        <Grid item xs={4}>
-          <Box
-            sx={{
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              pt: 20,
-              pb: 20,
-            }}> 
-            <Typography variant="h5" align="center" color="inherit" paragraph>
-              <strong>Speedy Delivery:</strong> Once you've placed your order, our rapid delivery system ensures your fuel reaches you promptly, 
-              keeping your operations running smoothly.
-            </Typography>
-            </Box>
-        </Grid>
-        <Grid item xs={8}>
-          <Box
-            sx={{
-              borderRadius: "5px",
-              backgroundImage: `url(https://gomotive.com/wp-content/uploads/2022/08/What-is-the-most-common-mode-of-oil-transportation-Feature.jpg)`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              pt: 25,
-              pb: 25,
-            }}></Box>
-        </Grid>
-        {/* Below is code for second line of stuff //fix explaination later */}
-        <Grid item xs={8}>
-          <Box
-            sx={{
-              borderRadius: "5px",
-              backgroundImage: `url(https://www.masslive.com/resizer/W8pdZ_jRPJlIcKg2phyNSLg_IHc=/1280x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/TBJTAHXBSJGIJGCJRJSAVXGRFE.jpg)`,
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              pt: 25,
-              pb: 25,
-            }}></Box>
-        </Grid>
-        <Grid item xs={4}>
-          <Box
-            sx={{
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              textAlign: 'center',
-              pt: 20,
-              pb: 16,
-            }}>
+          </Grid>
+          <Grid item xs={4}>
+            <Box
+              sx={{
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                pt: 20,
+                pb: 20,
+              }}>
               <Typography variant="h5" align="center" color="inherit" paragraph>
-                <strong>Unbeatable Convenience:</strong> PetroForecast takes the complexity out of fuel procurement. 
+                <strong>Speedy Delivery:</strong> Once you've placed your order, our rapid delivery system ensures your fuel reaches you promptly,
+                keeping your operations running smoothly.
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={8}>
+            <Box
+              sx={{
+                borderRadius: "5px",
+                backgroundImage: `url(https://gomotive.com/wp-content/uploads/2022/08/What-is-the-most-common-mode-of-oil-transportation-Feature.jpg)`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                pt: 25,
+                pb: 25,
+              }}></Box>
+          </Grid>
+          {/* Below is code for second line of stuff //fix explaination later */}
+          <Grid item xs={8}>
+            <Box
+              sx={{
+                borderRadius: "5px",
+                backgroundImage: `url(https://www.masslive.com/resizer/W8pdZ_jRPJlIcKg2phyNSLg_IHc=/1280x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/TBJTAHXBSJGIJGCJRJSAVXGRFE.jpg)`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                pt: 25,
+                pb: 25,
+              }}></Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Box
+              sx={{
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                textAlign: 'center',
+                pt: 20,
+                pb: 16,
+              }}>
+              <Typography variant="h5" align="center" color="inherit" paragraph>
+                <strong>Unbeatable Convenience:</strong> PetroForecast takes the complexity out of fuel procurement.
                 With just a few clicks, you're on your way to receiving top-quality fuel at the best rates.
               </Typography>
             </Box>
+          </Grid>
         </Grid>
-      </Grid>
-      <Typography variant="h5" align="center" maxWidth="md" paragraph>
-        Fueling your success, one prediction at a time. Choose PetroForecast – where innovation meets your energy needs.
-      </Typography>
+        <Typography variant="h5" align="center" maxWidth="md" paragraph>
+          Fueling your success, one prediction at a time. Choose PetroForecast – where innovation meets your energy needs.
+        </Typography>
       </Container>
       {/* Api for charts */}
-      <br/><br/>
+      <br /><br />
       <Container maxWidth="xl">
         <Typography variant="h3"
           align="center"
@@ -288,7 +289,7 @@ export default function HomePage() {
         </div>
       </Container>
       {/* This section is dedicated to news */}
-        {/* <Container>
+      {/* <Container>
           <Typography
             variant="h3"
             align="center"
@@ -331,7 +332,7 @@ export default function HomePage() {
           </Grid>
         </Container> */}
     </main>
-    
+
     // <div>
     //   <div style={{ display: 'flex', flexDirection:'column', justifyContent: 'space-between',}}>
     //     <div style={containerStyle}>
