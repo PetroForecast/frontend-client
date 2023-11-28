@@ -1,6 +1,9 @@
 /*TODO: 
-- role based user authentication
-- some logic to determine if the user is logged in, e.g., checking a token, etc.
+- Homepage change to a traditional format "Welcome to our website..." (Not required but lets try to do this) (Yuto & Jessica)
+- Modify Fuel quote forms 'suggested price' and 'total amount due' modify form layout (Jaz)
+- Get quote button (fuel quote form) (Jaz)
+- Partial form submission (fuel quote form) (Max & Jaz)
+- Submit quote saves the quote to database (fuel quote form) (Max & Jaz)
 */
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -19,6 +22,7 @@ import DemoPage from './pages/DemoPage';
 import ProfileCompletionForm from "./components/ProfileCompletionForm";
 import axios from 'axios';
 import './scrollbar/custom-scrollbar-ui.css';
+import Footer from './components/Footer';
 
 // Import the DescriptionAlerts component from Alert.jsx
 import DescriptionAlerts from './Alerts/alert';
@@ -106,15 +110,21 @@ export default function App() {
       console.log(response.data);
       if (response.data) {
         setIsLoggedIn(true);
+        setRegistrationAlert({
+          open: true,
+          severity: 'success',
+          message: 'Successfully logged in, welcome!',
+        });
         setCurrentUser(response.data);
         localStorage.setItem("currentUser", JSON.stringify(response.data));
         //console.log((JSON.parse((localStorage.getItem("currentUser"))).isComplete));
         let profileComplete = JSON.parse((localStorage.getItem("currentUser"))).isComplete;
-        if (profileComplete === 'false') {
+        if (profileComplete === 0) {
           setProfileComplete(false);
         } else {
           setProfileComplete(true);
         }
+        localStorage.setItem("currentPage", "");
         if (!isProfileComplete) {
           navigate("/profile-completion");
         } else {
@@ -127,7 +137,6 @@ export default function App() {
         severity: 'error',
         message: 'Failed to login. Username or password incorrect!',
       });
-
       console.error('Login failed:', error);
 
       // alert("Failed to login")
@@ -140,6 +149,8 @@ export default function App() {
     localStorage.removeItem("currentUser");
     setIsLoggedIn(false);
     setCurrentUser(null);
+    setRegistrationAlert({ open: false })
+    localStorage.setItem("currentPage", "");
     navigate("/");
   };
 
@@ -153,14 +164,15 @@ export default function App() {
     navigate("/dashboard");
   };
 
-  const handleProfileCompletion = (profileComplete) => {
+  const handleProfileCompletion = (updatedUser, profileComplete) => {
     setProfileComplete(profileComplete);
     localStorage.setItem("profileCompleted", profileComplete ? "true" : "false");
+    setCurrentUser(updatedUser);
   };
 
   const handleUpdateProfile = async (updatedUser) => {
     try {
-      const response = await axios.put(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/update/${updatedUser.username}`, updatedUser)
+      const response = await axios.put(`https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/update/${updatedUser.userId}`, updatedUser)
       console.log("Profile update action on:", response.data);
       setCurrentUser(response.data);
       localStorage.setItem("currentUser", JSON.stringify(response.data));
@@ -209,14 +221,14 @@ export default function App() {
       />
 
       { // Alert UI 
-      registrationAlert.open && (
-        <DescriptionAlerts
-          severity={registrationAlert.severity}
-          message={registrationAlert.message}
-          closeable={true}
-          onClose={() => setRegistrationAlert({ ...registrationAlert, open: false })}
-        />
-      )}
+        registrationAlert.open && (
+          <DescriptionAlerts
+            severity={registrationAlert.severity}
+            message={registrationAlert.message}
+            closeable={true}
+            onClose={() => setRegistrationAlert({ ...registrationAlert, open: false })}
+          />
+        )}
 
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -264,6 +276,7 @@ export default function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      {/* <Footer/> */}
     </div>
   );
 }
