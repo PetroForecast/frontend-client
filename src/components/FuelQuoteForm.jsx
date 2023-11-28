@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import axios from "axios";
 
+
 import DescriptionAlerts from "../Alerts/alert";
 
 
@@ -12,6 +13,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
     severity: "success", // Set the severity based on the message type
     message: "",
   });
+
 
   const [formData, setFormData] = useState({
     id: "",
@@ -25,6 +27,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
   async function handleGetQuote(e) {
     e.preventDefault();
     //add the form data to a new object
+
     const choice = "preview";
     if (
       formData.gallonsRequested === "" ||
@@ -38,6 +41,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
       });
       // alert("Error. Please fill all fields and try again.")
     } else {
+
       const newQuote = {
         id: uuidv4(),
         gallonsRequested: formData.gallonsRequested,
@@ -119,13 +123,15 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         //update state to reflect change in UI
         onSubmitQuote();
       } catch (error) {
+
         setRegistrationAlert({
           open: true,
           severity: "error",
           message: "Error submitting quote:",
         });
+
         console.error("Error submitting quote:", error);
-        // alert("Error submitting quote");
+        alert("Error submitting quote");
       }
       //11/28/2023 (FIXME: Keep data populated and 
       // put the returned calculations in pricePerGallon and amountDue fields)
@@ -136,6 +142,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         deliveryDate: formData.deliveryDate,
         pricePerGallon: "",
         amountDue: "",
+
       });
       setRegistrationAlert({
         open: true,
@@ -143,6 +150,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         message: "Quote successfully submitted",
       });
       // alert("Quote successfully submitted")
+
     }
   }
 
@@ -156,6 +164,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
 
   return (
     <Paper elevation={4} sx={{ p: 2 }}>
+
       {
         // Alert UI
         registrationAlert.open && (
@@ -172,6 +181,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
       <Typography gutterBottom color="primary" variant="h4">
         Fuel Quote Form
       </Typography>
+
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth

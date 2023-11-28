@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogTitle, TextField, Button, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import DescriptionAlerts from '../Alerts/alert';
 
 // This function takes in props and updates them based on user input
 const RegistrationModal = ({ open, onClose, onRegistration }) => {
-    const [registrationAlert, setRegistrationAlert] = useState({
-        open: false,
-        severity: 'success', // Set the severity based on the message type
-        message: '',
-    });
-    
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -44,12 +36,7 @@ const RegistrationModal = ({ open, onClose, onRegistration }) => {
         
         }
         else{
-            setRegistrationAlert({
-                open: true,
-                severity: 'error',
-                message: 'Please complete all the fields.',
-            });
-            // alert("Please complete all the fields.")
+            alert("Please complete all the fields.")
         }
 
 
@@ -72,15 +59,6 @@ const RegistrationModal = ({ open, onClose, onRegistration }) => {
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
-            { // Alert UI 
-            registrationAlert.open && (
-                <DescriptionAlerts
-                severity={registrationAlert.severity}
-                message={registrationAlert.message}
-                closeable={true}
-                onClose={() => setRegistrationAlert({ ...registrationAlert, open: false })}
-                />
-            )}
             <DialogContent>
                 <TextField
                     label="Username"
