@@ -21,11 +21,16 @@ const columns = [
 ];
 
 export default function FuelQuoteHistoryTable({ latestQuotes }) {
-  const rows = latestQuotes.map((row) => ({
-    id: row.quoteId,
-    ...row,
-    deliveryDate: row.deliveryDate.split("T")[0],
-  }));
+  let rows = {};
+  if (latestQuotes.error) {
+    console.error(latestQuotes.error);
+  } else {
+    rows = latestQuotes.map((row) => ({
+      id: row.quoteId,
+      ...row,
+      deliveryDate: row.deliveryDate.split("T")[0],
+    }));
+  }
 
   return (
     <Paper elevation={4} sx={{ p: 2 }}>
