@@ -1,6 +1,7 @@
+
 import { Container, Typography, Grid } from '@mui/material';
 import React from 'react';
-import { getNews } from '../data/News.api';
+//import { getNews } from '../data/News.api';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -8,16 +9,21 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 
 //Here we get news
-const data = await getNews();
-// console.log(data);
-var increment = 1; 
-var cardContent = {} // "author", "description", "title", "url", "urlToImage"
-for(let d of data){
-  cardContent[increment] = d;
-  increment+=1;
-}
-
-const cards = Array(data.length).fill(1).map((n, i) => n + i);
+// var data = [];
+// try {
+//   data = await getNews();
+// } catch (error) {
+//   data = [];
+//   console.error('Error fetching news:', error);
+// }
+// // console.log(data);
+// var increment = 1; 
+// var cardContent = {} // "author", "description", "title", "url", "urlToImage"
+// for(let d of data){
+//   cardContent[increment] = d;
+//   increment+=1;
+// }
+// const cards = Array(data.length).fill(1).map((n, i) => n + i);
 
 const containerStyle = {
   display: 'flex',
@@ -47,21 +53,34 @@ const BlogPage = () => {
 
   return (
     <div style={containerStyle}>
-
       <Container>
           <Typography
             variant="h3"
             align="center"
             sx={{
               fontFamily: 'monospace',
+              pt: '42px',
             }}
             gutterBottom
           >
             Latest Stories
           </Typography>
           <br/>
-          <Grid container spacing={4} justifyContent="center">
-            {cards.map((card) => (
+          {/* <Grid container spacing={4} justifyContent="center" sx={{ pb: '22pt' }}>
+            {data.length === 0 ? 
+              <Grid item xs={12} sm={6} md={4}>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Nothing to see
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            :
+            cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -87,8 +106,9 @@ const BlogPage = () => {
                   </CardActions>
                 </Card>
               </Grid>
-            ))}
-          </Grid>
+            ))
+            }
+          </Grid> */}
         </Container>
 
       <section className="videos">
@@ -121,3 +141,4 @@ const BlogPage = () => {
 };
 
 export default BlogPage;
+

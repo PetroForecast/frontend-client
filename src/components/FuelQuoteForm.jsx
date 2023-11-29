@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import axios from "axios";
 
+
 import DescriptionAlerts from "../Alerts/alert";
 
-//Note on fuel quote form (TODO/FIXME): If a user does not specify the delivery address, default it to that user's delivery address(one), else send the delivery address through
 
 export default function FuelQuoteForm({ onSubmitQuote, user }) {
   const [registrationAlert, setRegistrationAlert] = useState({
@@ -14,18 +14,21 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
     message: "",
   });
 
+
   const [formData, setFormData] = useState({
     id: "",
     gallonsRequested: "",
     deliveryAddress: user.addressOne,
     deliveryDate: "",
     pricePerGallon: "1.5",
-    amountDue: "100",
+    amountDue: "",
   });
 
   async function handleGetQuote(e) {
     e.preventDefault();
     //add the form data to a new object
+
+    const choice = "preview";
     if (
       formData.gallonsRequested === "" ||
       formData.deliveryAddress === "" ||
@@ -38,25 +41,55 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
       });
       // alert("Error. Please fill all fields and try again.")
     } else {
+
       const newQuote = {
         id: uuidv4(),
         gallonsRequested: formData.gallonsRequested,
         deliveryAddress: formData.deliveryAddress,
         deliveryDate: formData.deliveryDate,
-        pricePerGallon: formData.pricePerGallon,
-        amountDue: formData.amountDue,
         user: user.userId,
+        option: choice,
       };
-      console.log(newQuote);
+      //console.log(newQuote);
       //API call here
+      try {
+        const response = await axios.post(
+          `https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/check-quote`,
+          newQuote
+        );
 
-      //Set form data here
+        //console.log(response.data);
+        const { suggestedPricePerGallon, suggestedTotalPrice } = response.data;
+        //console.log(suggestedPricePerGallon);
+        setFormData({
+          id: "",
+          gallonsRequested: formData.gallonsRequested,
+          deliveryAddress: formData.deliveryAddress,
+          deliveryDate: formData.deliveryDate,
+          pricePerGallon: suggestedPricePerGallon,
+          amountDue: suggestedTotalPrice,
+        });
+        setRegistrationAlert({
+          open: true,
+          severity: "success",
+          message: "Quote successfully created",
+        });
+
+      } catch (error) {
+        setRegistrationAlert({
+          open: true,
+          severity: "error",
+          message: "Error getting quote:",
+        });
+        console.error("Error getting quote:", error);
+      }
     }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     //add the form data to a new object
+    const choice = "add"; //"preview" for getting quote
     if (
       formData.gallonsRequested === "" ||
       formData.deliveryAddress === "" ||
@@ -74,14 +107,13 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         gallonsRequested: formData.gallonsRequested,
         deliveryAddress: formData.deliveryAddress,
         deliveryDate: formData.deliveryDate,
-        pricePerGallon: formData.pricePerGallon,
-        amountDue: formData.amountDue,
         user: user.userId,
+        option: choice
       };
       console.log(newQuote);
       try {
         const response = await axios.post(
-          `https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/add-quote`,
+          `https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/check-quote`,
           newQuote
         );
         //Retrieve and parse the existing quotes from localStorage
@@ -91,21 +123,26 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         //update state to reflect change in UI
         onSubmitQuote();
       } catch (error) {
+
         setRegistrationAlert({
           open: true,
           severity: "error",
           message: "Error submitting quote:",
         });
+
         console.error("Error submitting quote:", error);
-        // alert("Error submitting quote");
+        alert("Error submitting quote");
       }
+      //11/28/2023 (FIXME: Keep data populated and 
+      // put the returned calculations in pricePerGallon and amountDue fields)
       setFormData({
         id: "",
         gallonsRequested: "",
-        deliveryAddress: "",
-        deliveryDate: "",
+        deliveryAddress: formData.deliveryAddress,
+        deliveryDate: formData.deliveryDate,
         pricePerGallon: "",
         amountDue: "",
+
       });
       setRegistrationAlert({
         open: true,
@@ -113,6 +150,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         message: "Quote successfully submitted",
       });
       // alert("Quote successfully submitted")
+
     }
   }
 
@@ -126,6 +164,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
 
   return (
     <Paper elevation={4} sx={{ p: 2 }}>
+
       {
         // Alert UI
         registrationAlert.open && (
@@ -142,6 +181,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
       <Typography gutterBottom color="primary" variant="h4">
         Fuel Quote Form
       </Typography>
+
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
@@ -149,7 +189,7 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
           value={formData.gallonsRequested}
           onChange={handleChange}
           label="Gallons Requested"
-          type="text" // Change the type to "text"
+          type="text"
           required
           variant="outlined"
           sx={{ mb: 2 }}
