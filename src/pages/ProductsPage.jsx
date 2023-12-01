@@ -1,75 +1,71 @@
-import React from 'react';
-import ceo from './images/main_image_4353.webp'; 
-import states from './images/states.webp'; 
-import data from './images/data.webp'; 
-import attempt from './images/try.webp'; 
-// import reactlogo from '../../public/logo192.png'; 
+import React from "react";
+// import reactlogo from '../../public/logo192.png';
 
 function ProductsPage() {
   const ceo_main = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: '5px',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "5px",
   };
 
   const ceo_image = {
-    width: '60rem',
-    height: '30rem',
+    width: "60rem",
+    height: "30rem",
   };
 
   const ceo_text = {
-    fontSize: 'larger',
-    maxWidth: '550px',
-    overflow: 'hidden',
+    fontSize: "larger",
+    maxWidth: "550px",
+    overflow: "hidden",
   };
 
   const ceo_h1 = {
-    fontFamily: 'Arial sans-serif',
-    fontSize: '26px',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontFamily: "Arial sans-serif",
+    fontSize: "26px",
+    fontWeight: "bold",
+    textAlign: "center",
   };
 
   const boxes = {
-    height: '100%',
-    margin: '0',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: "100%",
+    margin: "0",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   };
 
   const container = {
-    width: '300px',
-    height: '300px',
-    position: 'relative',
-    margin: '0 20px', /* Add margin for spacing between elements */
-    overflow: 'hidden', // Hide any content that overflows the container
-    borderRadius: '20px', // Rounded corners
+    width: "300px",
+    height: "300px",
+    position: "relative",
+    margin: "0 20px" /* Add margin for spacing between elements */,
+    overflow: "hidden", // Hide any content that overflows the container
+    borderRadius: "20px", // Rounded corners
   };
 
   const imageWrapper = {
-    width: '100%',
-    height: '100%',
-    position: 'relative',
+    width: "100%",
+    height: "100%",
+    position: "relative",
   };
 
   const background_image = {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover', // Cover the container
-    backgroundColor: 'blue',
+    width: "100%",
+    height: "100%",
+    objectFit: "cover", // Cover the container
+    backgroundColor: "blue",
   };
 
   const text = {
-    position: 'absolute',
-    bottom: '0',
-    left: '0',
-    right: '0',
-    backgroundColor: 'white',
-    padding: '10px',
-    textAlign: 'center',
+    position: "absolute",
+    bottom: "0",
+    left: "0",
+    right: "0",
+    backgroundColor: "white",
+    padding: "10px",
+    textAlign: "center",
   };
 
   return (
@@ -77,7 +73,7 @@ function ProductsPage() {
       <div className="Main-image-text" style={ceo_main}>
         <img
           alt="This CEO and entrepreneur are working on their laptops"
-          src={ceo}
+          src="https://petroforecastimages.s3.amazonaws.com/images/main_image_4353.webp"
           style={ceo_image}
         />
         <div style={ceo_text}>
@@ -99,7 +95,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={states}
+              src="https://petroforecastimages.s3.amazonaws.com/images/states.webp"
               alt="mage1"
               className="background-image"
               style={background_image}
@@ -112,7 +108,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={data}
+              src="https://petroforecastimages.s3.amazonaws.com/images/data.webp"
               alt="mage2"
               className="background-image"
               style={background_image}
@@ -125,7 +121,7 @@ function ProductsPage() {
         <div style={{ ...container }}>
           <div style={imageWrapper}>
             <img
-              src={attempt}
+              src="https://petroforecastimages.s3.amazonaws.com/images/try.webp"
               alt="mage3"
               className="background-image"
               style={background_image}
