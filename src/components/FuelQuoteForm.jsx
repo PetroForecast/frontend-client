@@ -2,18 +2,43 @@ import { TextField, Typography, Paper, Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import axios from "axios";
-
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 
 import DescriptionAlerts from "../Alerts/alert";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function FuelQuoteForm({ onSubmitQuote, user }) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setFormData({
+      id: "",
+      gallonsRequested: "",
+      deliveryAddress: formData.deliveryAddress,
+      deliveryDate: formData.deliveryDate,
+      pricePerGallon: "",
+      amountDue: "",
+    });
+  };
+
   const [registrationAlert, setRegistrationAlert] = useState({
     open: false,
     severity: "success", // Set the severity based on the message type
     message: "",
   });
-
 
   const [formData, setFormData] = useState({
     id: "",
@@ -41,7 +66,6 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
       });
       // alert("Error. Please fill all fields and try again.")
     } else {
-
       const newQuote = {
         id: uuidv4(),
         gallonsRequested: formData.gallonsRequested,
@@ -66,15 +90,14 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
           gallonsRequested: formData.gallonsRequested,
           deliveryAddress: formData.deliveryAddress,
           deliveryDate: formData.deliveryDate,
-          pricePerGallon: suggestedPricePerGallon,
-          amountDue: suggestedTotalPrice,
+          pricePerGallon: parseFloat(suggestedPricePerGallon).toFixed(2),
+          amountDue: parseFloat(suggestedTotalPrice).toFixed(2),
         });
         setRegistrationAlert({
           open: true,
           severity: "success",
           message: "Quote successfully created",
         });
-
       } catch (error) {
         setRegistrationAlert({
           open: true,
@@ -108,22 +131,35 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         deliveryAddress: formData.deliveryAddress,
         deliveryDate: formData.deliveryDate,
         user: user.userId,
-        option: choice
+        option: choice,
       };
-      console.log(newQuote);
+
       try {
         const response = await axios.post(
           `https://api-petroforecast-ec6416a1a32f.herokuapp.com/users/quote-history/check-quote`,
           newQuote
         );
+
+        const { suggestedPricePerGallon, suggestedTotalPrice } = response.data;
+
+        setFormData({
+          id: "",
+          gallonsRequested: formData.gallonsRequested,
+          deliveryAddress: formData.deliveryAddress,
+          deliveryDate: formData.deliveryDate,
+          pricePerGallon: parseFloat(suggestedPricePerGallon).toFixed(2),
+          amountDue: parseFloat(suggestedTotalPrice).toFixed(2),
+        });
         //Retrieve and parse the existing quotes from localStorage
         const existingQuotes = JSON.parse(localStorage.getItem("quotes")) || [];
         // Update the "quotes" item in localStorage
-        localStorage.setItem("quotes", JSON.stringify([...existingQuotes, response.data]));
+        localStorage.setItem(
+          "quotes",
+          JSON.stringify([...existingQuotes, response.data])
+        );
         //update state to reflect change in UI
         onSubmitQuote();
       } catch (error) {
-
         setRegistrationAlert({
           open: true,
           severity: "error",
@@ -133,24 +169,16 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         console.error("Error submitting quote:", error);
         alert("Error submitting quote");
       }
-      //11/28/2023 (FIXME: Keep data populated and 
+      //11/28/2023 (FIXME: Keep data populated and
       // put the returned calculations in pricePerGallon and amountDue fields)
-      setFormData({
-        id: "",
-        gallonsRequested: "",
-        deliveryAddress: formData.deliveryAddress,
-        deliveryDate: formData.deliveryDate,
-        pricePerGallon: "",
-        amountDue: "",
 
-      });
       setRegistrationAlert({
         open: true,
         severity: "success",
         message: "Quote successfully submitted",
       });
+      handleOpen();
       // alert("Quote successfully submitted")
-
     }
   }
 
@@ -164,7 +192,6 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
 
   return (
     <Paper elevation={4} sx={{ p: 2 }}>
-
       {
         // Alert UI
         registrationAlert.open && (
@@ -246,11 +273,34 @@ export default function FuelQuoteForm({ onSubmitQuote, user }) {
         <Button type="submit" variant="contained">
           SUBMIT
         </Button>
-        <Button type="submit" variant="outlined" onClick={handleGetQuote} sx={{
-          marginLeft: "10px",
-        }}>
+        <Button
+          type="submit"
+          variant="outlined"
+          onClick={handleGetQuote}
+          sx={{
+            marginLeft: "10px",
+          }}
+        >
           Get Quote
         </Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Quote successfully submitted✅
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Suggested Price/Gallon: ${formData.pricePerGallon}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Total Amount Due: ${formData.amountDue}
+            </Typography>
+          </Box>
+        </Modal>
       </form>
     </Paper>
   );
